@@ -1,71 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoodRay - Elevate Your Mood</title>
-    <link rel="stylesheet" href="/styles/style.css" />
-  </head>
-  <body>
-    <header class="header">
-      <img
-        src="/2bc69eda-f45b-4519-a5bb-a61b1a5e3fc4.jpg"
-        alt="MoodRay Logo"
-        class="logo"
-      />
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodRay - Elevate Your Mood</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header class="header">
+    <img src="assets/logo.jpg" alt="MoodRay Logo" class="logo" />
+  </header>
 
-    <section class="section">
-      <div class="container">
-        <h1>Welcome to MoodRay</h1>
-        <p class="tagline">
-          A smart lamp that combines light and music to enhance your mood.
-        </p>
-        <a href="#buy-now" class="cta-button">Buy Now</a>
-      </div>
-    </section>
+  <section class="section">
+    <div class="container">
+      <h1>Welcome to MoodRay</h1>
+      <p class="tagline">A smart lamp that combines light and music to enhance your mood.</p>
+      <a href="#buy-now" class="cta-button">Buy Now</a>
+    </div>
+  </section>
 
-    <section class="section alt" id="about">
-      <div class="container">
-        <h2>About MoodRay</h2>
-        <p>
-          <strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses 
-          scientifically-backed connections between colour and music to improve your mood and mental health. 
-          Designed especially for teenagers and young adults, MoodRay integrates light and music therapies 
-          powered by AI to create a personalized mood-enhancing experience.
-        </p>
-        <p>
-          Our innovative technology detects your mood and adjusts light colours and music accordingly, 
-          helping reduce stress, anxiety, and mood swings. It’s more than a lamp — it’s a companion for your mental well-being.
-        </p>
-      </div>
-    </section>
+  <section class="section alt" id="about">
+    <div class="container">
+      <h2>About MoodRay</h2>
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses 
+      scientifically-backed connections between colour and music to improve your mood and mental health.</p>
+      <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
+    </div>
+  </section>
 
-    <section class="section" id="features">
-      <div class="container">
-        <h2>Main Features</h2>
-        <ul>
-          <li>Mental health and mood enhancement through light and music</li>
-          <li>Smart home and IoT integration with voice assistant compatibility</li>
-          <li>Customizable settings and DIY options through the app</li>
-          <li>Music-based therapy syncing with Spotify, Apple Music, and more</li>
-          <li>Compact, portable design with rechargeable batteries and ambient light</li>
-        </ul>
-      </div>
-    </section>
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Main Features</h2>
+      <ul>
+        <li>Mood enhancement through light and music</li>
+        <li>Smart home integration with voice assistants</li>
+        <li>Customizable app settings</li>
+        <li>Spotify and Apple Music syncing</li>
+        <li>Portable design with rechargeable batteries</li>
+      </ul>
+    </div>
+  </section>
 
-    <section class="section alt" id="buy-now">
-      <div class="container">
-        <h2>Buy Now</h2>
-        <p>
-          Ready to elevate your mood? Get your MoodRay smart lamp today and experience the future of mood enhancement with light and music.
-        </p>
-        <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
-      </div>
-    </section>
+  <section class="section alt" id="mood-calendar">
+    <div class="container">
+      <h2>Track Your Mood</h2>
+      <p>Use the calendar below to track how you’re feeling each day.</p>
+      <div id="calendar"></div>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <p>&copy; 2025 MoodRay. All rights reserved.</p>
-    </footer>
-  </body>
+  <section class="section" id="buy-now">
+    <div class="container">
+      <h2>Buy Now</h2>
+      <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
+      <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 MoodRay. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Simple mood calendar (basic highlight only)
+    const calendar = document.getElementById("calendar");
+    const today = new Date();
+    let html = "<table><tr>";
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    days.forEach(day => html += `<th>${day}</th>`);
+    html += "</tr><tr>";
+
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+
+    const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    for (let i = 1; i <= totalDays; i++) {
+      const isToday = i === today.getDate();
+      html += `<td class="${isToday ? 'today' : ''}">${i}</td>`;
+      if ((i + firstDay) % 7 === 0) html += "</tr><tr>";
+    }
+
+    html += "</tr></table>";
+    calendar.innerHTML = html;
+  </script>
+</body>
 </html>
