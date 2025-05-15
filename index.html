@@ -41,16 +41,27 @@
     </div>
   </section>
 
+  <!-- New Mood Color Legend Section -->
+  <section class="section alt" id="mood-colors">
+    <div class="container">
+      <h2>Mood Color Scale</h2>
+      <div class="mood-circles">
+        <div class="mood-circle happy">Happy</div>
+        <div class="mood-circle excited">Excited</div>
+        <div class="mood-circle relaxed">Relaxed</div>
+        <div class="mood-circle okay">Okay</div>
+        <div class="mood-circle tired">Tired</div>
+        <div class="mood-circle sad">Sad</div>
+        <div class="mood-circle angry">Angry</div>
+      </div>
+    </div>
+  </section>
+
   <section class="section alt" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
       <p>Click a date below to log your mood with color!</p>
       <div id="calendar"></div>
-      <div class="mood-legend">
-        <span class="mood happy">Happy</span>
-        <span class="mood okay">Okay</span>
-        <span class="mood sad">Sad</span>
-      </div>
     </div>
   </section>
 
@@ -69,13 +80,10 @@
   <script>
     const calendar = document.getElementById("calendar");
     const today = new Date();
-    const moods = ["happy", "okay", "sad"];
+    const moods = ["happy", "excited", "relaxed", "okay", "tired", "sad", "angry"];
 
     const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
-
-    const setStoredMood = (day, mood) => {
-      localStorage.setItem(`mood-${day}`, mood);
-    };
+    const setStoredMood = (day, mood) => localStorage.setItem(`mood-${day}`, mood);
 
     let html = "<table><tr>";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -85,6 +93,7 @@
     const year = today.getFullYear();
     const month = today.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
+
     for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -95,7 +104,6 @@
       html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
       if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
-
     html += "</tr></table>";
     calendar.innerHTML = html;
 
