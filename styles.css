@@ -109,11 +109,23 @@ header {
 
 #calendar td.today {
     border: 2px solid #005eff;
+    font-weight: bold;
 }
 
+/* Mood colors for calendar */
 #calendar td.happy {
     background-color: #90ee90; /* Light green */
     color: #003300;
+}
+
+#calendar td.excited {
+    background-color: #ffcc00; /* Bright yellow */
+    color: #663300;
+}
+
+#calendar td.relaxed {
+    background-color: #87ceeb; /* Sky blue */
+    color: #003366;
 }
 
 #calendar td.okay {
@@ -121,38 +133,73 @@ header {
     color: #665c00;
 }
 
+#calendar td.tired {
+    background-color: #b0a090; /* Muted brown/grey */
+    color: #3e2f1c;
+}
+
 #calendar td.sad {
     background-color: #ff9999; /* Light red */
     color: #660000;
 }
 
-/* Mood legend */
-.mood-legend {
-    margin-top: 10px;
-    font-size: 0.95rem;
+#calendar td.angry {
+    background-color: #cc3300; /* Strong red */
+    color: #fff;
 }
 
-.mood-legend .mood {
-    display: inline-block;
-    padding: 5px 12px;
-    margin: 5px;
-    border-radius: 20px;
+/* Mood Color Scale Section */
+.mood-circles {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.mood-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     color: white;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.mood.happy {
-    background-color: #28a745;
+/* Circle colors matching moods */
+.mood-circle.happy {
+    background-color: #28a745; /* Green */
 }
 
-.mood.okay {
-    background-color: #ffc107;
+.mood-circle.excited {
+    background-color: #ffcc00; /* Bright Yellow */
+    color: #663300;
+}
+
+.mood-circle.relaxed {
+    background-color: #3498db; /* Blue */
+}
+
+.mood-circle.okay {
+    background-color: #ffc107; /* Amber */
     color: black;
 }
 
-.mood.sad {
-    background-color: #dc3545;
+.mood-circle.tired {
+    background-color: #8b7d6b; /* Muted brown */
+}
+
+.mood-circle.sad {
+    background-color: #dc3545; /* Red */
+}
+
+.mood-circle.angry {
+    background-color: #b02a22; /* Dark red */
 }
 
 /* Footer styles */
