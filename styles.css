@@ -33,9 +33,7 @@ h1, h2, h3 {
 
 .logo {
     display: block;
-    width: 100%;
     max-width: 180px;
-    height: auto;
     margin: 0 auto 20px auto;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
@@ -107,14 +105,54 @@ header {
     width: 14.2%;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
 }
 
 #calendar td.today {
-    background-color: #005eff;
+    border: 2px solid #005eff;
+}
+
+#calendar td.happy {
+    background-color: #90ee90; /* Light green */
+    color: #003300;
+}
+
+#calendar td.okay {
+    background-color: #ffe680; /* Light yellow */
+    color: #665c00;
+}
+
+#calendar td.sad {
+    background-color: #ff9999; /* Light red */
+    color: #660000;
+}
+
+/* Mood legend */
+.mood-legend {
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.mood-legend .mood {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 5px;
+    border-radius: 20px;
     color: white;
     font-weight: bold;
-    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.mood.happy {
+    background-color: #28a745;
+}
+
+.mood.okay {
+    background-color: #ffc107;
+    color: black;
+}
+
+.mood.sad {
+    background-color: #dc3545;
 }
 
 /* Footer styles */
@@ -123,17 +161,4 @@ header {
     color: white;
     text-align: center;
     padding: 20px;
-    font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .section {
-        padding: 40px 15px;
-    }
-
-    .cta-button {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
 }
