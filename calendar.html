@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood Calendar - MoodRay</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .calendar-section {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 1rem;
+        }
+        ul#moodLog {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul#moodLog li {
+            padding: 6px;
+            background-color: #e9ecef;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Mood Calendar</h1>
+        <p class="tagline">Track your mood and patterns daily</p>
+        <a href="index.html" class="cta-button">Back to Home</a>
+    </div>
+</header>
+
+<section class="section calendar-section">
+    <h2>Log Your Mood</h2>
+    <input type="date" id="moodDate">
+    <select id="moodSelect">
+        <option value="Happy">Happy</option>
+        <option value="Sad">Sad</option>
+        <option value="Anxious">Anxious</option>
+        <option value="Tired">Tired</option>
+        <option value="Excited">Excited</option>
+        <option value="Neutral">Neutral</option>
+    </select>
+    <button onclick="logMood()">Log Mood</button>
+
+    <h3>Logged Moods</h3>
+    <ul id="moodLog"></ul>
+</section>
+
+<script>
+function logMood() {
+    const date = document.getElementById('moodDate').value;
+    const mood = document.getElementById('moodSelect').value;
+
+    if (!date) {
+        alert("Please select a date.");
+        return;
+    }
+
+    const log = document.getElementById('moodLog');
+    const newEntry = document.createElement('li');
+    newEntry.textContent = `${date} - Mood: ${mood}`;
+    log.appendChild(newEntry);
+
+    let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
+    stored.push({date, mood});
+    localStorage.setItem("moodEntries", JSON.stringify(stored));
+}
+
+window.onload = function() {
+    let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
+    const log = document.getElementById('moodLog');
+    stored.forEach(entry => {
+        const li = document.createElement('li');
+        li.textContent = `${entry.date} - Mood: ${entry.mood}`;
+        log.appendChild(li);
+    });
+};
+</script>
+
+</body>
+</html>

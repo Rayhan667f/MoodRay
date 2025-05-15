@@ -1,0 +1,29 @@
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "index.html"
+        label: "Home Page"
+        name: "home"
+        editor:
+          preview: false
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Intro Section", name: "intro", widget: "text"}
+      - file: "calendar.html"
+        label: "Mood Calendar Page"
+        name: "calendar"
+        editor:
+          preview: false
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Page Description", name: "description", widget: "text"}
