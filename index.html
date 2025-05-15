@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MoodRay - Elevate Your Mood</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
   <header class="header">
-    <img src="images/logo.jpg" alt="MoodRay Logo" class="logo" />
+    <img src="assets/logo.jpg" alt="MoodRay Logo" class="logo" />
   </header>
 
   <section class="section">
@@ -44,7 +44,7 @@
   <section class="section alt" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Use the calendar below to track how you’re feeling each day.</p>
+      <p>Click on a day to log your mood.</p>
       <div id="calendar"></div>
     </div>
   </section>
@@ -64,6 +64,14 @@
   <script>
     const calendar = document.getElementById("calendar");
     const today = new Date();
+    const moodColors = {
+      happy: "#28a745",
+      sad: "#6c757d",
+      anxious: "#ffc107",
+      energetic: "#007bff",
+      calm: "#17a2b8"
+    };
+
     let html = "<table><tr>";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     days.forEach(day => html += `<th>${day}</th>`);
@@ -75,12 +83,25 @@
     const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     for (let i = 1; i <= totalDays; i++) {
       const isToday = i === today.getDate();
-      html += `<td class="${isToday ? 'today' : ''}">${i}</td>`;
+      html += `<td class="calendar-day ${isToday ? 'today' : ''}" data-day="${i}">${i}</td>`;
       if ((i + firstDay) % 7 === 0) html += "</tr><tr>";
     }
 
     html += "</tr></table>";
     calendar.innerHTML = html;
+
+    document.querySelectorAll('.calendar-day').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const mood = prompt("Log your mood: happy, sad, anxious, energetic, calm").toLowerCase();
+        if (moodColors[mood]) {
+          cell.style.backgroundColor = moodColors[mood];
+          cell.style.color = "white";
+          cell.style.fontWeight = "bold";
+        } else {
+          alert("Invalid mood. Try: happy, sad, anxious, energetic, calm.");
+        }
+      });
+    });
   </script>
 </body>
 </html>
