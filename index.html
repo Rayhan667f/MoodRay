@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MoodRay - Elevate Your Mood</title>
-  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
@@ -44,8 +44,13 @@
   <section class="section alt" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Click on a day to log your mood.</p>
+      <p>Click a date below to log your mood with color!</p>
       <div id="calendar"></div>
+      <div class="mood-legend">
+        <span class="mood happy">Happy</span>
+        <span class="mood okay">Okay</span>
+        <span class="mood sad">Sad</span>
+      </div>
     </div>
   </section>
 
@@ -64,12 +69,12 @@
   <script>
     const calendar = document.getElementById("calendar");
     const today = new Date();
-    const moodColors = {
-      happy: "#28a745",
-      sad: "#6c757d",
-      anxious: "#ffc107",
-      energetic: "#007bff",
-      calm: "#17a2b8"
+    const moods = ["happy", "okay", "sad"];
+
+    const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
+
+    const setStoredMood = (day, mood) => {
+      localStorage.setItem(`mood-${day}`, mood);
     };
 
     let html = "<table><tr>";
@@ -77,30 +82,31 @@
     days.forEach(day => html += `<th>${day}</th>`);
     html += "</tr><tr>";
 
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
     for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
-    const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    for (let i = 1; i <= totalDays; i++) {
-      const isToday = i === today.getDate();
-      html += `<td class="calendar-day ${isToday ? 'today' : ''}" data-day="${i}">${i}</td>`;
-      if ((i + firstDay) % 7 === 0) html += "</tr><tr>";
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= totalDays; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const mood = getStoredMood(dateKey);
+      const isToday = day === today.getDate();
+      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
+      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
 
     html += "</tr></table>";
     calendar.innerHTML = html;
 
-    document.querySelectorAll('.calendar-day').forEach(cell => {
-      cell.addEventListener('click', () => {
-        const mood = prompt("Log your mood: happy, sad, anxious, energetic, calm").toLowerCase();
-        if (moodColors[mood]) {
-          cell.style.backgroundColor = moodColors[mood];
-          cell.style.color = "white";
-          cell.style.fontWeight = "bold";
-        } else {
-          alert("Invalid mood. Try: happy, sad, anxious, energetic, calm.");
-        }
-      });
+    calendar.addEventListener("click", (e) => {
+      if (e.target.tagName === "TD" && e.target.dataset.date) {
+        const currentMood = moods.find(m => e.target.classList.contains(m)) || "";
+        let nextMood = moods[(moods.indexOf(currentMood) + 1) % moods.length];
+        moods.forEach(m => e.target.classList.remove(m));
+        e.target.classList.add(nextMood);
+        setStoredMood(e.target.dataset.date, nextMood);
+      }
     });
   </script>
 </body>
