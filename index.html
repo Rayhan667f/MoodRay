@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +23,7 @@
   <section class="section alt" id="about">
     <div class="container">
       <h2>About MoodRay</h2>
-      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses 
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses
       scientifically-backed connections between colour and music to improve your mood and mental health.</p>
       <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
     </div>
@@ -41,31 +42,31 @@
     </div>
   </section>
 
-  <!-- New Mood Color Legend Section -->
-  <section class="section alt" id="mood-colors">
+  <section class="section alt">
     <div class="container">
       <h2>Mood Color Scale</h2>
-      <div class="mood-circles">
-        <div class="mood-circle happy">Happy</div>
-        <div class="mood-circle excited">Excited</div>
-        <div class="mood-circle relaxed">Relaxed</div>
-        <div class="mood-circle okay">Okay</div>
-        <div class="mood-circle tired">Tired</div>
-        <div class="mood-circle sad">Sad</div>
-        <div class="mood-circle angry">Angry</div>
+      <div class="mood-legend">
+        <div class="mood-circle mood-black">Stressed</div>
+        <div class="mood-circle mood-grey">Nervous</div>
+        <div class="mood-circle mood-brown">Tired</div>
+        <div class="mood-circle mood-amber">Uncertain</div>
+        <div class="mood-circle mood-green">Calm</div>
+        <div class="mood-circle mood-bluegreen">Relaxed</div>
+        <div class="mood-circle mood-blue">Happy</div>
+        <div class="mood-circle mood-violet">Excited</div>
       </div>
     </div>
   </section>
 
-  <section class="section alt" id="mood-calendar">
+  <section class="section" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Click a date below to log your mood with color!</p>
+      <p>Click a date below to log your mood!</p>
       <div id="calendar"></div>
     </div>
   </section>
 
-  <section class="section" id="buy-now">
+  <section class="section alt" id="buy-now">
     <div class="container">
       <h2>Buy Now</h2>
       <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
@@ -80,10 +81,13 @@
   <script>
     const calendar = document.getElementById("calendar");
     const today = new Date();
-    const moods = ["happy", "excited", "relaxed", "okay", "tired", "sad", "angry"];
+    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet"];
 
     const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
-    const setStoredMood = (day, mood) => localStorage.setItem(`mood-${day}`, mood);
+
+    const setStoredMood = (day, mood) => {
+      localStorage.setItem(`mood-${day}`, mood);
+    };
 
     let html = "<table><tr>";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -93,7 +97,6 @@
     const year = today.getFullYear();
     const month = today.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
-
     for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -104,6 +107,7 @@
       html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
       if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
+
     html += "</tr></table>";
     calendar.innerHTML = html;
 
