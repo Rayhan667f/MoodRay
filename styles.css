@@ -43,7 +43,7 @@ h1, h2, h3 {
 }
 
 /* Header styling */
-header {
+header, .header {
     padding: 40px 20px;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
