@@ -1,10 +1,20 @@
+/* Root Brand Colors from Logo */
+:root {
+  --primary-color: #1f3fa3;
+  --secondary-color: #8eb4f8;
+  --highlight-color: #7d6cd8;
+  --soft-bg: #c9c5f6;
+  --text-dark: #333;
+  --text-light: #ffffff;
+}
+
 /* Base Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f8f9fa;
-    color: #333;
+    color: var(--text-dark);
 }
 
 h1, h2, h3 {
@@ -17,7 +27,7 @@ h1, h2, h3 {
 }
 
 .section.alt {
-    background-color: #e9ecef;
+    background-color: var(--soft-bg);
 }
 
 .container {
@@ -41,7 +51,8 @@ h1, h2, h3 {
 
 header {
     padding: 40px 20px;
-    background-color: white;
+    background-color: var(--primary-color);
+    color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     margin-bottom: 40px;
     border-radius: 12px;
@@ -50,7 +61,7 @@ header {
 .cta-button {
     display: inline-block;
     padding: 14px 30px;
-    background-color: #005eff;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 30px;
@@ -58,13 +69,13 @@ header {
     margin-top: 25px;
     font-size: 1.1rem;
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0, 94, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(31, 63, 163, 0.4);
     transition: background-color 0.3s ease;
 }
 
 .cta-button:hover,
 .cta-button:focus {
-    background-color: #0042c6;
+    background-color: #162d7c;
     cursor: pointer;
 }
 
@@ -86,7 +97,7 @@ header {
     color: #555;
 }
 
-/* Calendar styling */
+/* Calendar Styling */
 #calendar {
     margin: 20px auto;
     max-width: 600px;
@@ -105,56 +116,30 @@ header {
     width: 14.2%;
     font-size: 1rem;
     cursor: pointer;
+    border-radius: 6px;
 }
 
 #calendar td.today {
-    border: 2px solid #005eff;
-    font-weight: bold;
+    border: 2px solid var(--highlight-color);
 }
 
-/* Mood colors for calendar */
-#calendar td.happy {
-    background-color: #90ee90; /* Light green */
-    color: #003300;
-}
+/* Mood Calendar Colors */
+#calendar td.black { background-color: #000000; color: white; }
+#calendar td.grey { background-color: #666666; color: white; }
+#calendar td.brown { background-color: #8B4513; color: white; }
+#calendar td.amber { background-color: #FFBF00; color: black; }
+#calendar td.green { background-color: #00FF00; color: black; }
+#calendar td.bluegreen { background-color: #00CED1; color: black; }
+#calendar td.blue { background-color: #1E90FF; color: white; }
+#calendar td.violet { background-color: #9400D3; color: white; }
 
-#calendar td.excited {
-    background-color: #ffcc00; /* Bright yellow */
-    color: #663300;
-}
-
-#calendar td.relaxed {
-    background-color: #87ceeb; /* Sky blue */
-    color: #003366;
-}
-
-#calendar td.okay {
-    background-color: #ffe680; /* Light yellow */
-    color: #665c00;
-}
-
-#calendar td.tired {
-    background-color: #b0a090; /* Muted brown/grey */
-    color: #3e2f1c;
-}
-
-#calendar td.sad {
-    background-color: #ff9999; /* Light red */
-    color: #660000;
-}
-
-#calendar td.angry {
-    background-color: #cc3300; /* Strong red */
-    color: #fff;
-}
-
-/* Mood Color Scale Section */
-.mood-circles {
+/* Mood Scale Circles */
+.mood-legend {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 25px;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 15px;
 }
 
 .mood-circle {
@@ -162,49 +147,34 @@ header {
     height: 100px;
     border-radius: 50%;
     color: white;
-    font-weight: bold;
-    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    padding: 10px;
+    line-height: 1.3;
 }
 
-/* Circle colors matching moods */
-.mood-circle.happy {
-    background-color: #28a745; /* Green */
+.mood-circle:hover {
+    transform: scale(1.05);
 }
 
-.mood-circle.excited {
-    background-color: #ffcc00; /* Bright Yellow */
-    color: #663300;
-}
+.mood-black { background-color: #000000; }
+.mood-grey { background-color: #666666; }
+.mood-brown { background-color: #8B4513; }
+.mood-amber { background-color: #FFBF00; color: black; }
+.mood-green { background-color: #00FF00; color: black; }
+.mood-bluegreen { background-color: #00CED1; color: black; }
+.mood-blue { background-color: #1E90FF; }
+.mood-violet { background-color: #9400D3; }
 
-.mood-circle.relaxed {
-    background-color: #3498db; /* Blue */
-}
-
-.mood-circle.okay {
-    background-color: #ffc107; /* Amber */
-    color: black;
-}
-
-.mood-circle.tired {
-    background-color: #8b7d6b; /* Muted brown */
-}
-
-.mood-circle.sad {
-    background-color: #dc3545; /* Red */
-}
-
-.mood-circle.angry {
-    background-color: #b02a22; /* Dark red */
-}
-
-/* Footer styles */
+/* Footer */
 .footer {
-    background-color: #212529;
+    background-color: var(--primary-color);
     color: white;
     text-align: center;
     padding: 20px;
