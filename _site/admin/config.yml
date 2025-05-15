@@ -1,0 +1,25 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "content/homepage.md"
+        label: "Home Page"
+        name: "homepage"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "markdown" }
+
+      - file: "content/calendar.md"
+        label: "Calendar Page"
+        name: "calendar"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "markdown" }
