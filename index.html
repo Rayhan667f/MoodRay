@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="header">
+  <header class="header gradient-header">
     <img src="images/logo 1.jpeg" alt="MoodRay Logo" class="logo" />
   </header>
 
@@ -23,8 +23,7 @@
   <section class="section alt" id="about">
     <div class="container">
       <h2>About MoodRay</h2>
-      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses
-      scientifically-backed connections between colour and music to improve your mood and mental health.</p>
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses scientifically-backed connections between colour and music to improve your mood and mental health.</p>
       <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
     </div>
   </section>
@@ -54,6 +53,8 @@
         <div class="mood-circle mood-bluegreen">Relaxed</div>
         <div class="mood-circle mood-blue">Happy</div>
         <div class="mood-circle mood-violet">Excited</div>
+        <div class="mood-circle mood-pink">Loved</div>
+        <div class="mood-circle mood-gold">Confident</div>
       </div>
     </div>
   </section>
@@ -66,7 +67,14 @@
     </div>
   </section>
 
-  <section class="section alt" id="buy-now">
+  <section class="section alt" id="sustainability">
+    <div class="container">
+      <h2>Sustainability</h2>
+      <p>MoodRay is committed to a greener future. Our lamps use energy-efficient LEDs, recyclable materials, and packaging made from recycled paper. Plus, the rechargeable battery helps reduce e-waste and your carbon footprint.</p>
+    </div>
+  </section>
+
+  <section class="section" id="buy-now">
     <div class="container">
       <h2>Buy Now</h2>
       <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
@@ -81,13 +89,10 @@
   <script>
     const calendar = document.getElementById("calendar");
     const today = new Date();
-    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet"];
+    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet", "pink", "gold"];
 
     const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
-
-    const setStoredMood = (day, mood) => {
-      localStorage.setItem(`mood-${day}`, mood);
-    };
+    const setStoredMood = (day, mood) => localStorage.setItem(`mood-${day}`, mood);
 
     let html = "<table><tr>";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
