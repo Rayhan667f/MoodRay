@@ -3,174 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mood Calendar - MoodRay</title>
+  <title>MoodRay - Mood Calendar</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background: #fffafc;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #800080;
+    }
+
+    .calendar-container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .mood-select {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    select {
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .mood-display {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .mood-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    /* Mood colors */
+    .black { background: #000; }
+    .grey { background: #666; }
+    .brown { background: #8B4513; }
+    .amber { background: #FFBF00; }
+    .green { background: #00FF00; }
+    .bluegreen { background: #00CED1; }
+    .blue { background: #1E90FF; }
+    .violet { background: #9400D3; }
+    .pink { background: #FF66CC; }
+    .gold { background: #FFD700; }
+  </style>
 </head>
 <body>
-  <header class="header gradient-header">
-    <a href="index.html">
-      <img src="images/logo 1.jpeg" alt="MoodRay Logo" class="logo" />
-    </a>
-  </header>
-
-  <section class="section" id="mood-calendar">
-    <div class="container">
-      <h2>Track Your Mood</h2>
-      <p>Select a date below to log your top 3 emotions!</p>
-      <div id="calendar"></div>
-
-      <!-- Mood picker modal -->
-      <div id="moodPickerModal" class="modal hidden">
-        <div class="modal-content">
-          <h3>Select up to 3 moods</h3>
-          <div id="moodOptions" class="mood-options"></div>
-          <button id="saveMoodsBtn" class="cta-button">Save</button>
-          <button id="cancelMoodsBtn" class="cta-button alt">Cancel</button>
-        </div>
-      </div>
-      <div id="modalOverlay" class="modal-overlay hidden"></div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2025 MoodRay. All rights reserved.</p>
-  </footer>
+  <h1>Mood Calendar</h1>
+  <div class="calendar-container">
+    <table id="calendar-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Log Moods</th>
+          <th>Your Mood Colors</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body">
+        <!-- Filled by script -->
+      </tbody>
+    </table>
+  </div>
 
   <script>
     const moods = [
-      { name: "Stressed", color: "black" },
-      { name: "Nervous", color: "grey" },
-      { name: "Tired", color: "brown" },
-      { name: "Uncertain", color: "amber" },
-      { name: "Calm", color: "green" },
-      { name: "Relaxed", color: "bluegreen" },
-      { name: "Happy", color: "blue" },
-      { name: "Excited", color: "violet" },
-      { name: "Loved", color: "pink" },
-      { name: "Confident", color: "gold" }
+      "black", "grey", "brown", "amber",
+      "green", "bluegreen", "blue", "violet", "pink", "gold"
     ];
 
-    const maxMoodsPerDay = 3;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0-indexed
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const tbody = document.getElementById("calendar-body");
 
-    const calendar = document.getElementById("calendar");
-    const moodPickerModal = document.getElementById("moodPickerModal");
-    const moodOptionsContainer = document.getElementById("moodOptions");
-    const saveMoodsBtn = document.getElementById("saveMoodsBtn");
-    const cancelMoodsBtn = document.getElementById("cancelMoodsBtn");
-    const modalOverlay = document.getElementById("modalOverlay");
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const tr = document.createElement("tr");
 
-    let selectedDateKey = null;
-    let selectedMoods = [];
+      const tdDate = document.createElement("td");
+      tdDate.textContent = dateKey;
+      tr.appendChild(tdDate);
 
-    const getStoredMoods = (dateKey) => {
-      const stored = localStorage.getItem(`mood-${dateKey}`);
-      return stored ? JSON.parse(stored) : [];
-    };
+      const tdSelect = document.createElement("td");
+      const selectGroup = document.createElement("div");
+      selectGroup.classList.add("mood-select");
 
-    const setStoredMoods = (dateKey, moodList) => {
-      localStorage.setItem(`mood-${dateKey}`, JSON.stringify(moodList));
-    };
-
-    function renderCalendar() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-      let html = "<table><thead><tr>";
-      const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      weekdays.forEach(day => (html += `<th>${day}</th>`));
-      html += "</tr></thead><tbody><tr>";
-
-      let dayCount = 1;
-      for (let i = 0; i < 42; i++) {
-        if (i < firstDay || dayCount > daysInMonth) {
-          html += "<td></td>";
-        } else {
-          const dateKey = `${year}-${month + 1}-${dayCount}`;
-          const moodsForDay = getStoredMoods(dateKey);
-          const isToday = dayCount === now.getDate();
-
-          html += `<td data-date="${dateKey}" class="${isToday ? "today" : ""}">`;
-          html += `<div class="day-number">${dayCount}</div>`;
-          moodsForDay.forEach(color => {
-            html += `<span class="mood-circle mood-${color}"></span>`;
-          });
-          html += "</td>";
-          dayCount++;
-        }
-        if ((i + 1) % 7 === 0) html += "</tr><tr>";
+      const selects = [];
+      for (let i = 0; i < 3; i++) {
+        const select = document.createElement("select");
+        select.innerHTML = `<option value="">--</option>` + moods.map(
+          mood => `<option value="${mood}">${mood}</option>`
+        ).join("");
+        select.dataset.index = i;
+        selects.push(select);
+        selectGroup.appendChild(select);
       }
 
-      html += "</tr></tbody></table>";
-      calendar.innerHTML = html;
-    }
+      tdSelect.appendChild(selectGroup);
+      tr.appendChild(tdSelect);
 
-    function openMoodPicker(dateKey) {
-      selectedDateKey = dateKey;
-      selectedMoods = getStoredMoods(dateKey);
-      moodOptionsContainer.innerHTML = "";
+      const tdDisplay = document.createElement("td");
+      const dotDisplay = document.createElement("div");
+      dotDisplay.className = "mood-display";
+      tdDisplay.appendChild(dotDisplay);
+      tr.appendChild(tdDisplay);
 
-      moods.forEach(m => {
-        const moodDiv = document.createElement("div");
-        moodDiv.classList.add("mood-option");
-        if (selectedMoods.includes(m.color)) moodDiv.classList.add("selected");
-        moodDiv.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue(`--${m.color}`) || "";
-
-        moodDiv.innerHTML = `
-          <span class="mood-circle mood-${m.color}"></span>
-          <span>${m.name}</span>
-        `;
-
-        moodDiv.addEventListener("click", () => {
-          if (selectedMoods.includes(m.color)) {
-            selectedMoods = selectedMoods.filter(c => c !== m.color);
-            moodDiv.classList.remove("selected");
-          } else {
-            if (selectedMoods.length < maxMoodsPerDay) {
-              selectedMoods.push(m.color);
-              moodDiv.classList.add("selected");
-            } else {
-              alert(`You can only select up to ${maxMoodsPerDay} moods.`);
-            }
-          }
+      // Load saved moods
+      const stored = localStorage.getItem(`mood-${dateKey}`);
+      if (stored) {
+        const savedMoods = stored.split(",");
+        savedMoods.forEach((mood, i) => {
+          if (selects[i]) selects[i].value = mood;
+          const dot = document.createElement("div");
+          dot.className = `mood-dot ${mood}`;
+          dotDisplay.appendChild(dot);
         });
+      }
 
-        moodOptionsContainer.appendChild(moodDiv);
+      // Handle changes
+      selects.forEach((select, index) => {
+        select.addEventListener("change", () => {
+          const currentMoods = selects.map(s => s.value).filter(Boolean);
+          localStorage.setItem(`mood-${dateKey}`, currentMoods.join(","));
+          dotDisplay.innerHTML = "";
+          currentMoods.forEach(mood => {
+            const dot = document.createElement("div");
+            dot.className = `mood-dot ${mood}`;
+            dotDisplay.appendChild(dot);
+          });
+        });
       });
 
-      moodPickerModal.classList.remove("hidden");
-      modalOverlay.classList.remove("hidden");
+      tbody.appendChild(tr);
     }
-
-    function closeMoodPicker() {
-      moodPickerModal.classList.add("hidden");
-      modalOverlay.classList.add("hidden");
-      selectedDateKey = null;
-      selectedMoods = [];
-    }
-
-    saveMoodsBtn.addEventListener("click", () => {
-      if (selectedDateKey) {
-        setStoredMoods(selectedDateKey, selectedMoods);
-        renderCalendar();
-        closeMoodPicker();
-      }
-    });
-
-    cancelMoodsBtn.addEventListener("click", closeMoodPicker);
-    modalOverlay.addEventListener("click", closeMoodPicker);
-
-    calendar.addEventListener("click", e => {
-      const td = e.target.closest("td[data-date]");
-      if (td) {
-        openMoodPicker(td.dataset.date);
-      }
-    });
-
-    renderCalendar();
   </script>
 </body>
 </html>
