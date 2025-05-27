@@ -5,6 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MoodRay - Elevate Your Mood</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Calendar table style override */
+    .calendar-table-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      overflow-x: auto;
+    }
+
+    .calendar-table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .calendar-table-container th,
+    .calendar-table-container td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .mood-select {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    select {
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .mood-display {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .mood-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    /* Mood dot colors */
+    .black { background: #000; }
+    .grey { background: #666; }
+    .brown { background: #8B4513; }
+    .amber { background: #FFBF00; }
+    .green { background: #00FF00; }
+    .bluegreen { background: #00CED1; }
+    .blue { background: #1E90FF; }
+    .violet { background: #9400D3; }
+    .pink { background: #FF66CC; }
+    .gold { background: #FFD700; }
+
+    /* Clickable calendar day colors */
+    #calendar td.black, .mood-black { background-color: #000; color: white; }
+    #calendar td.grey, .mood-grey { background-color: #666; color: white; }
+    #calendar td.brown, .mood-brown { background-color: #8B4513; color: white; }
+    #calendar td.amber, .mood-amber { background-color: #FFBF00; }
+    #calendar td.green, .mood-green { background-color: #00FF00; }
+    #calendar td.bluegreen, .mood-bluegreen { background-color: #00CED1; }
+    #calendar td.blue, .mood-blue { background-color: #1E90FF; color: white; }
+    #calendar td.violet, .mood-violet { background-color: #9400D3; color: white; }
+    #calendar td.pink, .mood-pink { background-color: #FF66CC; }
+    #calendar td.gold, .mood-gold { background-color: #FFD700; }
+  </style>
 </head>
 <body>
   <header class="header gradient-header">
@@ -61,8 +131,23 @@
   <section class="section" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Click a date below to log your top 3 emotions!</p>
+      <p>Click a date to cycle through your top 3 emotions OR use the dropdowns below.</p>
       <div id="calendar"></div>
+
+      <div class="calendar-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Log Moods</th>
+              <th>Your Mood Colors</th>
+            </tr>
+          </thead>
+          <tbody id="calendar-body">
+            <!-- Filled by JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -86,18 +171,80 @@
   </footer>
 
   <script>
-    const calendar = document.getElementById("calendar");
-    const today = new Date();
     const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet", "pink", "gold"];
-    const maxMoodsPerDay = 3;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const tbody = document.getElementById("calendar-body");
 
+    // Dropdown Table
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const tr = document.createElement("tr");
+
+      const tdDate = document.createElement("td");
+      tdDate.textContent = dateKey;
+      tr.appendChild(tdDate);
+
+      const tdSelect = document.createElement("td");
+      const selectGroup = document.createElement("div");
+      selectGroup.classList.add("mood-select");
+
+      const selects = [];
+      for (let i = 0; i < 3; i++) {
+        const select = document.createElement("select");
+        select.innerHTML = `<option value="">--</option>` + moods.map(
+          mood => `<option value="${mood}">${mood}</option>`
+        ).join("");
+        select.dataset.index = i;
+        selects.push(select);
+        selectGroup.appendChild(select);
+      }
+
+      tdSelect.appendChild(selectGroup);
+      tr.appendChild(tdSelect);
+
+      const tdDisplay = document.createElement("td");
+      const dotDisplay = document.createElement("div");
+      dotDisplay.className = "mood-display";
+      tdDisplay.appendChild(dotDisplay);
+      tr.appendChild(tdDisplay);
+
+      // Load saved moods
+      const stored = localStorage.getItem(`mood-${dateKey}`);
+      if (stored) {
+        const savedMoods = stored.split(",");
+        savedMoods.forEach((mood, i) => {
+          if (selects[i]) selects[i].value = mood;
+          const dot = document.createElement("div");
+          dot.className = `mood-dot ${mood}`;
+          dotDisplay.appendChild(dot);
+        });
+      }
+
+      // Save changes
+      selects.forEach((select) => {
+        select.addEventListener("change", () => {
+          const currentMoods = selects.map(s => s.value).filter(Boolean);
+          localStorage.setItem(`mood-${dateKey}`, currentMoods.join(","));
+          dotDisplay.innerHTML = "";
+          currentMoods.forEach(mood => {
+            const dot = document.createElement("div");
+            dot.className = `mood-dot ${mood}`;
+            dotDisplay.appendChild(dot);
+          });
+        });
+      });
+
+      tbody.appendChild(tr);
+    }
+
+    // Top Mini Calendar
+    const calendar = document.getElementById("calendar");
     const getStoredMoods = (day) => {
       const stored = localStorage.getItem(`mood-${day}`);
       return stored ? stored.split(",") : [];
-    };
-
-    const setStoredMoods = (day, moodList) => {
-      localStorage.setItem(`mood-${day}`, moodList.join(","));
     };
 
     let html = "<table><tr>";
@@ -105,18 +252,14 @@
     days.forEach(day => html += `<th>${day}</th>`);
     html += "</tr><tr>";
 
-    const year = today.getFullYear();
-    const month = today.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
-    const totalDays = new Date(year, month + 1, 0).getDate();
-    for (let day = 1; day <= totalDays; day++) {
+    for (let day = 1; day <= daysInMonth; day++) {
       const dateKey = `${year}-${month + 1}-${day}`;
       const moodList = getStoredMoods(dateKey);
-      const isToday = day === today.getDate();
-      const moodClasses = moodList.map(m => m).join(" ");
-      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${moodClasses}">${day}</td>`;
+      const moodClasses = moodList.join(" ");
+      html += `<td data-date="${dateKey}" class="${moodClasses}">${day}</td>`;
       if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
 
@@ -132,22 +275,17 @@
         let currentIndex = moods.findIndex(m => moodList.includes(m));
         let nextMood = moods[(currentIndex + 1) % moods.length];
 
-        // Add next mood if under limit, else rotate
+        // Add new mood if under limit, else rotate
         if (!moodList.includes(nextMood)) {
-          if (moodList.length >= maxMoodsPerDay) {
-            moodList.shift(); // remove oldest
-          }
+          if (moodList.length >= 3) moodList.shift();
           moodList.push(nextMood);
-        }
-
-        // Reset if already has all moods
-        if (moodList.length === maxMoodsPerDay && moodList.every(m => cell.classList.contains(m))) {
+        } else if (moodList.length === 3) {
           moodList = [];
         }
 
+        localStorage.setItem(`mood-${dateKey}`, moodList.join(","));
         moods.forEach(m => cell.classList.remove(m));
         moodList.forEach(m => cell.classList.add(m));
-        setStoredMoods(dateKey, moodList);
       }
     });
   </script>
