@@ -1,118 +1,205 @@
-/* --- Calendar Styles --- */
-
-#calendar {
-  max-width: 600px;
-  margin: 1.5em auto;
-  font-family: 'Arial', sans-serif;
-  user-select: none;
+/* Base styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  color: #333;
 }
 
+.header {
+  padding: 1rem;
+  text-align: center;
+}
+
+.gradient-header {
+  background: linear-gradient(to right, #ff5f6d, #a26edb);
+}
+
+.logo {
+  height: 70px;
+}
+
+.section {
+  padding: 3rem 1rem;
+  background: #fff;
+}
+
+.section.alt {
+  background: #f0f0f8;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  color: #5c2a9d;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.cta-button {
+  background: #5c2a9d;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  text-decoration: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #7a42c5;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #eee;
+  font-size: 0.9rem;
+}
+
+/* Mood legend badges */
+.mood-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.mood-circle {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.mood-black { background: #222; }
+.mood-grey { background: #888; }
+.mood-brown { background: #8b5e3c; }
+.mood-amber { background: #ffc107; color: #000; }
+.mood-green { background: #4caf50; }
+.mood-bluegreen { background: #00bfa5; }
+.mood-blue { background: #2196f3; }
+.mood-violet { background: #9c27b0; }
+.mood-pink { background: #e91e63; }
+.mood-gold { background: #ffd700; color: #000; }
+
+/* Calendar table */
 #calendar table {
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
 
 #calendar th, #calendar td {
-  border: 1px solid #ddd;
-  width: 14.28%; /* 7 columns */
-  height: 80px;
+  border: 1px solid #ccc;
+  width: 14.28%;
+  height: 60px;
+  text-align: left;
   vertical-align: top;
+  padding: 4px;
   position: relative;
   cursor: pointer;
-  background: #fff;
-  transition: background-color 0.3s ease;
-  padding: 4px 6px;
-  box-sizing: border-box;
 }
 
 #calendar th {
-  background-color: var(--blue);
+  background: #5c2a9d;
   color: white;
-  font-weight: 600;
-  text-align: center;
-  padding: 8px 0;
-}
-
-#calendar td:hover:not(:empty) {
-  background-color: var(--bluegreen-light);
 }
 
 #calendar td.today {
-  background-color: var(--amber);
-  color: var(--black);
   font-weight: bold;
+  outline: 2px dashed #5c2a9d;
 }
 
-.day-number {
-  position: absolute;
-  top: 4px;
-  left: 6px;
-  font-weight: 700;
-  font-size: 0.9em;
-  user-select: none;
+/* Mood dots in calendar cells */
+.mood-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
 }
 
-/* Mood circles inside calendar cells */
-.mood-circle {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
+.mood-dot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  margin: 2px 4px 3px 0;
-  border: 1px solid #999;
-  vertical-align: middle;
+  display: inline-block;
+  border: 1px solid #444;
 }
 
-/* Mood color classes */
-.mood-black   { background-color: var(--black); }
-.mood-grey    { background-color: var(--grey); }
-.mood-brown   { background-color: var(--brown); }
-.mood-amber   { background-color: var(--amber); }
-.mood-green   { background-color: var(--green); }
-.mood-bluegreen { background-color: var(--bluegreen); }
-.mood-blue    { background-color: var(--blue); }
-.mood-violet  { background-color: var(--violet); }
-.mood-pink    { background-color: var(--pink); }
-.mood-gold    { background-color: var(--gold); }
+/* Color for each mood */
+.mood-dot.black { background: #222; }
+.mood-dot.grey { background: #888; }
+.mood-dot.brown { background: #8b5e3c; }
+.mood-dot.amber { background: #ffc107; }
+.mood-dot.green { background: #4caf50; }
+.mood-dot.bluegreen { background: #00bfa5; }
+.mood-dot.blue { background: #2196f3; }
+.mood-dot.violet { background: #9c27b0; }
+.mood-dot.pink { background: #e91e63; }
+.mood-dot.gold { background: #ffd700; }
 
-/* --- Modal Styles --- */
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 1000;
+}
 
+.modal-overlay.active {
+  display: block;
+}
+
+/* Modal box */
 .modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 320px;
-  max-width: 90%;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1001;
+  width: 340px;
+  background: white;
+  border-radius: 12px;
   padding: 20px;
-  font-family: 'Arial', sans-serif;
-}
-
-.modal.hidden {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   display: none;
+  z-index: 1001;
 }
 
-.modal-content h3 {
-  margin: 0 0 1em 0;
-  font-weight: 700;
-  color: var(--blue);
+.modal.active {
+  display: block;
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 1em;
+  color: #5c2a9d;
   text-align: center;
 }
 
-/* Mood options container */
+/* Mood selection options */
 .mood-options {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 1.2em;
+  margin-bottom: 1em;
 }
 
-/* Each mood option */
 .mood-option {
   display: flex;
   align-items: center;
@@ -121,76 +208,26 @@
   border-radius: 25px;
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-  background: #f8f8f8;
-  min-width: 110px;
+  background: #f0f0f0;
   font-size: 0.95em;
-  color: var(--black);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .mood-option.selected {
-  border-color: var(--blue);
-  background: #e0f2ff;
+  border-color: #5c2a9d;
+  background: #e5dcf8;
 }
 
-.mood-option .mood-circle {
+.mood-option .mood-dot {
   margin-right: 8px;
   border: 1px solid #666;
 }
 
 /* Modal buttons */
-.cta-button {
-  background-color: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 5px;
-  display: inline-block;
+.modal-buttons {
+  text-align: center;
 }
 
-.cta-button:hover {
-  background-color: var(--bluegreen);
-}
-
-.cta-button.alt {
-  background-color: #ccc;
-  color: #333;
-}
-
-.cta-button.alt:hover {
-  background-color: #bbb;
-}
-
-/* Modal overlay (background behind modal) */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.3);
-  z-index: 1000;
-}
-
-.modal-overlay.hidden {
-  display: none;
-}
-
-/* --- CSS Variables (if missing in your CSS) --- */
-:root {
-  --black: #000000;
-  --grey: #888888;
-  --brown: #a52a2a;
-  --amber: #ffbf00;
-  --green: #008000;
-  --bluegreen: #008080;
-  --blue: #0000ff;
-  --violet: #8a2be2;
-  --pink: #ff69b4;
-  --gold: #ffd700;
-  --bluegreen-light: #a3d5d3;
+.modal-buttons .cta-button {
+  margin: 0 6px;
 }
