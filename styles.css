@@ -1,123 +1,100 @@
-/* Base styles */
 body {
   font-family: 'Quicksand', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f2f6fa;
+  background: #f9f9f9;
   color: #333;
 }
 
 header {
-  text-align: center;
-  padding: 40px 20px 20px;
-  background: linear-gradient(135deg, #ffbf00, #8a2be2);
+  background: linear-gradient(to right, #6a11cb, #2575fc);
   color: white;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
+  text-align: center;
+  padding: 2rem 1rem;
 }
 
 #logo {
   width: 100px;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
 }
 
 .section {
-  padding: 50px 20px;
+  padding: 3rem 1rem;
 }
 
 .section.alt {
-  background-color: #ffffff;
+  background: #f0f4f8;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
-h1, h2 {
-  color: #333;
+h2 {
+  color: #2575fc;
+  margin-bottom: 1rem;
 }
 
 ul {
-  list-style-type: disc;
-  padding-left: 20px;
+  list-style: disc;
+  padding-left: 1.5rem;
 }
 
-/* Mood Color Scale */
 .color-scale {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .color {
-  flex: 1 1 100px;
-  padding: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
+  font-size: 0.8rem;
   text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 14px;
+  padding: 0.5rem;
 }
 
-/* Mood Calendar Styles */
+.black { background-color: #000000; }
+.grey { background-color: #808080; }
+.brown { background-color: #A52A2A; }
+.amber { background-color: #FFBF00; color: #000; }
+.green { background-color: #00FF00; color: #000; }
+.bluegreen { background-color: #0D98BA; }
+.blue { background-color: #0000FF; }
+.violet { background-color: #8A2BE2; }
+.pink { background-color: #FF69B4; }
+.gold { background-color: #FFD700; color: #000; }
+
 #calendar {
-  margin-top: 20px;
-  overflow-x: auto;
-}
-
-#calendar table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-}
-
-#calendar th, #calendar td {
   border: 1px solid #ccc;
-  padding: 10px;
-  width: 14.2%;
-  height: 60px;
-  position: relative;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 1rem;
+  min-height: 200px;
 }
 
-/* Mood color backgrounds (layered with opacity) */
-#calendar td.black { background-color: rgba(0, 0, 0, 0.6); color: #fff; }
-#calendar td.grey { background-color: rgba(128, 128, 128, 0.6); color: #fff; }
-#calendar td.brown { background-color: rgba(160, 82, 45, 0.6); color: #fff; }
-#calendar td.amber { background-color: rgba(255, 191, 0, 0.6); color: #000; }
-#calendar td.green { background-color: rgba(154, 205, 50, 0.6); color: #000; }
-#calendar td.bluegreen { background-color: rgba(32, 178, 170, 0.6); color: #000; }
-#calendar td.blue { background-color: rgba(30, 144, 255, 0.6); color: #fff; }
-#calendar td.violet { background-color: rgba(138, 43, 226, 0.6); color: #fff; }
-#calendar td.pink { background-color: rgba(255, 105, 180, 0.6); color: #000; }
-#calendar td.gold { background-color: rgba(255, 215, 0, 0.6); color: #000; }
-
-/* Button Styles */
 .btn {
   display: inline-block;
-  background-color: #8a2be2;
+  background-color: #2575fc;
   color: white;
-  padding: 12px 25px;
-  border-radius: 30px;
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
+  border-radius: 8px;
   font-weight: bold;
-  transition: background-color 0.3s;
 }
 
-.btn:hover {
-  background-color: #7326c2;
-}
-
-/* Footer */
 footer {
   text-align: center;
-  padding: 20px;
-  background-color: #ececec;
-  color: #555;
-  font-size: 14px;
+  padding: 2rem 1rem;
+  background: #333;
+  color: white;
 }
