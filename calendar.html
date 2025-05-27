@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +25,14 @@
             margin: 5px 0;
             border-radius: 5px;
         }
+        .mood-circle {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -42,12 +49,14 @@
     <h2>Log Your Mood</h2>
     <input type="date" id="moodDate">
     <select id="moodSelect">
-        <option value="Happy">Happy</option>
-        <option value="Sad">Sad</option>
-        <option value="Anxious">Anxious</option>
-        <option value="Tired">Tired</option>
-        <option value="Excited">Excited</option>
-        <option value="Neutral">Neutral</option>
+        <option value="Happy / Joyful / Content">Happy / Joyful / Content</option>
+        <option value="Sad / Down / Gloomy">Sad / Down / Gloomy</option>
+        <option value="Anxious / Nervous / Worried">Anxious / Nervous / Worried</option>
+        <option value="Tired / Drained / Lazy">Tired / Drained / Lazy</option>
+        <option value="Excited / Energetic / Motivated">Excited / Energetic / Motivated</option>
+        <option value="Neutral / Meh / Okay">Neutral / Meh / Okay</option>
+        <option value="Angry / Frustrated / Annoyed">Angry / Frustrated / Annoyed</option>
+        <option value="Lonely / Isolated / Unseen">Lonely / Isolated / Unseen</option>
     </select>
     <button onclick="logMood()">Log Mood</button>
 
@@ -56,6 +65,17 @@
 </section>
 
 <script>
+const moodColors = {
+    "Happy / Joyful / Content": "#ffcc00",
+    "Sad / Down / Gloomy": "#3498db",
+    "Anxious / Nervous / Worried": "#9b59b6",
+    "Tired / Drained / Lazy": "#95a5a6",
+    "Excited / Energetic / Motivated": "#e67e22",
+    "Neutral / Meh / Okay": "#bdc3c7",
+    "Angry / Frustrated / Annoyed": "#e74c3c",
+    "Lonely / Isolated / Unseen": "#34495e"
+};
+
 function logMood() {
     const date = document.getElementById('moodDate').value;
     const mood = document.getElementById('moodSelect').value;
@@ -67,7 +87,11 @@ function logMood() {
 
     const log = document.getElementById('moodLog');
     const newEntry = document.createElement('li');
-    newEntry.textContent = `${date} - Mood: ${mood}`;
+    const circle = document.createElement('span');
+    circle.className = 'mood-circle';
+    circle.style.backgroundColor = moodColors[mood] || '#ccc';
+    newEntry.appendChild(circle);
+    newEntry.appendChild(document.createTextNode(`${date} - Mood: ${mood}`));
     log.appendChild(newEntry);
 
     let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
@@ -80,7 +104,11 @@ window.onload = function() {
     const log = document.getElementById('moodLog');
     stored.forEach(entry => {
         const li = document.createElement('li');
-        li.textContent = `${entry.date} - Mood: ${entry.mood}`;
+        const circle = document.createElement('span');
+        circle.className = 'mood-circle';
+        circle.style.backgroundColor = moodColors[entry.mood] || '#ccc';
+        li.appendChild(circle);
+        li.appendChild(document.createTextNode(`${entry.date} - Mood: ${entry.mood}`));
         log.appendChild(li);
     });
 };
