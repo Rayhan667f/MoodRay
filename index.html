@@ -2,292 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MoodRay - Elevate Your Mood</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoodRay</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Calendar table style override */
-    .calendar-table-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      overflow-x: auto;
-    }
-
-    .calendar-table-container table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    .calendar-table-container th,
-    .calendar-table-container td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .mood-select {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 6px;
-    }
-
-    select {
-      padding: 4px;
-      border-radius: 4px;
-    }
-
-    .mood-display {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .mood-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-    }
-
-    /* Mood dot colors */
-    .black { background: #000; }
-    .grey { background: #666; }
-    .brown { background: #8B4513; }
-    .amber { background: #FFBF00; }
-    .green { background: #00FF00; }
-    .bluegreen { background: #00CED1; }
-    .blue { background: #1E90FF; }
-    .violet { background: #9400D3; }
-    .pink { background: #FF66CC; }
-    .gold { background: #FFD700; }
-
-    /* Clickable calendar day colors */
-    #calendar td.black, .mood-black { background-color: #000; color: white; }
-    #calendar td.grey, .mood-grey { background-color: #666; color: white; }
-    #calendar td.brown, .mood-brown { background-color: #8B4513; color: white; }
-    #calendar td.amber, .mood-amber { background-color: #FFBF00; }
-    #calendar td.green, .mood-green { background-color: #00FF00; }
-    #calendar td.bluegreen, .mood-bluegreen { background-color: #00CED1; }
-    #calendar td.blue, .mood-blue { background-color: #1E90FF; color: white; }
-    #calendar td.violet, .mood-violet { background-color: #9400D3; color: white; }
-    #calendar td.pink, .mood-pink { background-color: #FF66CC; }
-    #calendar td.gold, .mood-gold { background-color: #FFD700; }
-  </style>
 </head>
 <body>
-  <header class="header gradient-header">
-    <img src="images/logo 1.jpeg" alt="MoodRay Logo" class="logo" />
+  <header class="section">
+    <img src="logo.png" alt="MoodRay Logo" class="logo" />
+    <h1>Welcome to MoodRay</h1>
+    <p>Lighting and music synced with your emotions.</p>
   </header>
 
-  <section class="section">
-    <div class="container">
-      <h1>Welcome to MoodRay</h1>
-      <p class="tagline">A smart lamp that combines light and music to enhance your mood.</p>
-      <a href="#buy-now" class="cta-button">Buy Now</a>
-    </div>
-  </section>
-
   <section class="section alt" id="about">
-    <div class="container">
-      <h2>About MoodRay</h2>
-      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses scientifically-backed connections between colour and music to improve your mood and mental health.</p>
-      <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
-    </div>
+    <h2>About MoodRay</h2>
+    <p>MoodRay is a smart lamp that adapts its lighting and music to your mood, promoting mental well-being for teens and young adults.</p>
   </section>
 
   <section class="section" id="features">
-    <div class="container">
-      <h2>Main Features</h2>
-      <ul>
-        <li>Mood enhancement through light and music</li>
-        <li>Smart home integration with voice assistants</li>
-        <li>Customizable app settings</li>
-        <li>Spotify and Apple Music syncing</li>
-        <li>Portable design with rechargeable batteries</li>
-      </ul>
-    </div>
+    <h2>Features</h2>
+    <ul>
+      <li>Mood-based lighting and music</li>
+      <li>Voice input and mood detection</li>
+      <li>Spotify and smart home integration</li>
+      <li>Track your moods daily</li>
+    </ul>
   </section>
 
-  <section class="section alt">
-    <div class="container">
-      <h2>Mood Color Scale</h2>
-      <div class="mood-legend">
-        <div class="mood-circle mood-black">Stressed</div>
-        <div class="mood-circle mood-grey">Nervous</div>
-        <div class="mood-circle mood-brown">Tired</div>
-        <div class="mood-circle mood-amber">Uncertain</div>
-        <div class="mood-circle mood-green">Calm</div>
-        <div class="mood-circle mood-bluegreen">Relaxed</div>
-        <div class="mood-circle mood-blue">Happy</div>
-        <div class="mood-circle mood-violet">Excited</div>
-        <div class="mood-circle mood-pink">Loved</div>
-        <div class="mood-circle mood-gold">Confident</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="mood-calendar">
-    <div class="container">
-      <h2>Track Your Mood</h2>
-      <p>Click a date to cycle through your top 3 emotions OR use the dropdowns below.</p>
-      <div id="calendar"></div>
-
-      <div class="calendar-table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Log Moods</th>
-              <th>Your Mood Colors</th>
-            </tr>
-          </thead>
-          <tbody id="calendar-body">
-            <!-- Filled by JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
+  <!-- NEW: CSR & Sustainability Section -->
   <section class="section alt" id="sustainability">
-    <div class="container">
-      <h2>Sustainability</h2>
-      <p>MoodRay is committed to a greener future. Our lamps use energy-efficient LEDs, recyclable materials, and packaging made from recycled paper. Plus, the rechargeable battery helps reduce e-waste and your carbon footprint.</p>
+    <h2>CSR & Sustainability</h2>
+    <p>At MoodRay, we care about people and the planet. Our products use recyclable materials, and a portion of each purchase supports mental health initiatives.</p>
+  </section>
+
+  <!-- Mood Color Scale -->
+  <section class="section" id="mood-color-scale">
+    <h2>Mood Color Scale</h2>
+    <div class="mood-circle">
+      <div class="mood-item" style="--dot-color: black;">Stressed</div>
+      <div class="mood-item" style="--dot-color: gray;">Nervous</div>
+      <div class="mood-item" style="--dot-color: brown;">Tired</div>
+      <div class="mood-item" style="--dot-color: orange;">Uncertain</div>
+      <div class="mood-item" style="--dot-color: green;">Calm</div>
+      <div class="mood-item" style="--dot-color: teal;">Relaxed</div>
+      <div class="mood-item" style="--dot-color: blue;">Happy</div>
+      <div class="mood-item" style="--dot-color: violet;">Excited</div>
+      <div class="mood-item" style="--dot-color: pink;">Loved</div>
+      <div class="mood-item" style="--dot-color: gold;">Confident</div>
     </div>
   </section>
 
-  <section class="section" id="buy-now">
-    <div class="container">
-      <h2>Buy Now</h2>
-      <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
-      <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
-    </div>
+  <!-- Mood Calendar -->
+  <section class="section alt" id="mood-calendar">
+    <h2>Mood Calendar</h2>
+    <div class="calendar" id="calendar"></div>
+    <table id="mood-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Mood 1</th>
+          <th>Mood 2</th>
+          <th>Mood 3</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </section>
 
-  <footer class="footer">
-    <p>&copy; 2025 MoodRay. All rights reserved.</p>
-  </footer>
+  <!-- Buy Now -->
+  <section class="section" id="buy">
+    <h2>Buy Now</h2>
+    <a href="#" class="btn">Order your MoodRay today</a>
+  </section>
 
   <script>
-    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet", "pink", "gold"];
+    const moods = [
+      { name: "Stressed", color: "black" },
+      { name: "Nervous", color: "gray" },
+      { name: "Tired", color: "brown" },
+      { name: "Uncertain", color: "orange" },
+      { name: "Calm", color: "green" },
+      { name: "Relaxed", color: "teal" },
+      { name: "Happy", color: "blue" },
+      { name: "Excited", color: "violet" },
+      { name: "Loved", color: "pink" },
+      { name: "Confident", color: "gold" },
+    ];
+
+    const calendar = document.getElementById("calendar");
+    const moodTable = document.getElementById("mood-table").querySelector("tbody");
     const today = new Date();
-    const year = today.getFullYear();
     const month = today.getMonth();
+    const year = today.getFullYear();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const tbody = document.getElementById("calendar-body");
 
-    // Dropdown Table
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateKey = `${year}-${month + 1}-${day}`;
-      const tr = document.createElement("tr");
+    const moodData = JSON.parse(localStorage.getItem("moodData") || "{}");
 
-      const tdDate = document.createElement("td");
-      tdDate.textContent = dateKey;
-      tr.appendChild(tdDate);
+    function saveMoodData() {
+      localStorage.setItem("moodData", JSON.stringify(moodData));
+    }
 
-      const tdSelect = document.createElement("td");
-      const selectGroup = document.createElement("div");
-      selectGroup.classList.add("mood-select");
+    function updateDropdowns(dateStr, moodIndex, moodName) {
+      if (!moodData[dateStr]) moodData[dateStr] = [null, null, null];
+      moodData[dateStr][moodIndex] = moodName;
+      saveMoodData();
+    }
 
-      const selects = [];
-      for (let i = 0; i < 3; i++) {
-        const select = document.createElement("select");
-        select.innerHTML = `<option value="">--</option>` + moods.map(
-          mood => `<option value="${mood}">${mood}</option>`
-        ).join("");
-        select.dataset.index = i;
-        selects.push(select);
-        selectGroup.appendChild(select);
-      }
+    function createDropdown(dateStr, moodIndex) {
+      const select = document.createElement("select");
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.textContent = "--";
+      select.appendChild(emptyOption);
 
-      tdSelect.appendChild(selectGroup);
-      tr.appendChild(tdSelect);
-
-      const tdDisplay = document.createElement("td");
-      const dotDisplay = document.createElement("div");
-      dotDisplay.className = "mood-display";
-      tdDisplay.appendChild(dotDisplay);
-      tr.appendChild(tdDisplay);
-
-      // Load saved moods
-      const stored = localStorage.getItem(`mood-${dateKey}`);
-      if (stored) {
-        const savedMoods = stored.split(",");
-        savedMoods.forEach((mood, i) => {
-          if (selects[i]) selects[i].value = mood;
-          const dot = document.createElement("div");
-          dot.className = `mood-dot ${mood}`;
-          dotDisplay.appendChild(dot);
-        });
-      }
-
-      // Save changes
-      selects.forEach((select) => {
-        select.addEventListener("change", () => {
-          const currentMoods = selects.map(s => s.value).filter(Boolean);
-          localStorage.setItem(`mood-${dateKey}`, currentMoods.join(","));
-          dotDisplay.innerHTML = "";
-          currentMoods.forEach(mood => {
-            const dot = document.createElement("div");
-            dot.className = `mood-dot ${mood}`;
-            dotDisplay.appendChild(dot);
-          });
-        });
+      moods.forEach((mood) => {
+        const option = document.createElement("option");
+        option.value = mood.name;
+        option.textContent = mood.name;
+        select.appendChild(option);
       });
 
-      tbody.appendChild(tr);
+      select.value = moodData[dateStr]?.[moodIndex] || "";
+      select.addEventListener("change", () => {
+        updateDropdowns(dateStr, moodIndex, select.value);
+      });
+
+      return select;
     }
 
-    // Top Mini Calendar
-    const calendar = document.getElementById("calendar");
-    const getStoredMoods = (day) => {
-      const stored = localStorage.getItem(`mood-${day}`);
-      return stored ? stored.split(",") : [];
-    };
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
+      const cell = document.createElement("div");
+      cell.className = "calendar-cell";
+      cell.textContent = i;
 
-    let html = "<table><tr>";
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    days.forEach(day => html += `<th>${day}</th>`);
-    html += "</tr><tr>";
+      let clickIndex = 0;
+      cell.addEventListener("click", () => {
+        const nextMood = moods[clickIndex % moods.length];
+        if (!moodData[dateStr]) moodData[dateStr] = [null, null, null];
+        moodData[dateStr][0] = nextMood.name;
+        saveMoodData();
+        cell.style.backgroundColor = nextMood.color;
+        clickIndex++;
+      });
 
-    const firstDay = new Date(year, month, 1).getDay();
-    for (let i = 0; i < firstDay; i++) html += "<td></td>";
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateKey = `${year}-${month + 1}-${day}`;
-      const moodList = getStoredMoods(dateKey);
-      const moodClasses = moodList.join(" ");
-      html += `<td data-date="${dateKey}" class="${moodClasses}">${day}</td>`;
-      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
-    }
-
-    html += "</tr></table>";
-    calendar.innerHTML = html;
-
-    calendar.addEventListener("click", (e) => {
-      if (e.target.tagName === "TD" && e.target.dataset.date) {
-        const cell = e.target;
-        const dateKey = cell.dataset.date;
-        let moodList = getStoredMoods(dateKey);
-
-        let currentIndex = moods.findIndex(m => moodList.includes(m));
-        let nextMood = moods[(currentIndex + 1) % moods.length];
-
-        // Add new mood if under limit, else rotate
-        if (!moodList.includes(nextMood)) {
-          if (moodList.length >= 3) moodList.shift();
-          moodList.push(nextMood);
-        } else if (moodList.length === 3) {
-          moodList = [];
-        }
-
-        localStorage.setItem(`mood-${dateKey}`, moodList.join(","));
-        moods.forEach(m => cell.classList.remove(m));
-        moodList.forEach(m => cell.classList.add(m));
+      if (moodData[dateStr]?.[0]) {
+        const mood = moods.find(m => m.name === moodData[dateStr][0]);
+        if (mood) cell.style.backgroundColor = mood.color;
       }
-    });
+
+      calendar.appendChild(cell);
+
+      // Table row
+      const row = document.createElement("tr");
+      const dateCell = document.createElement("td");
+      dateCell.textContent = dateStr;
+      row.appendChild(dateCell);
+
+      for (let j = 0; j < 3; j++) {
+        const moodCell = document.createElement("td");
+        moodCell.appendChild(createDropdown(dateStr, j));
+        row.appendChild(moodCell);
+      }
+
+      moodTable.appendChild(row);
+    }
   </script>
 </body>
 </html>
