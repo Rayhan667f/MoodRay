@@ -1,48 +1,252 @@
+
+You said:
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MoodRay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodRay - Elevate Your Mood</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="container">
-      <img src="images/logo.png" alt="MoodRay Logo" class="logo" />
-      <h1>Welcome to MoodRay</h1>
-      <p class="tagline">Track your emotions with color and light</p>
-      <a href="calendar.html" class="cta-button">Go to Mood Calendar</a>
-    </div>
+  <header class="header gradient-header">
+    <img src="images/logo 1.jpeg" alt="MoodRay Logo" class="logo" />
   </header>
 
-  <section id="about" class="section alt">
-    <h2>About MoodRay</h2>
-    <p>
-      MoodRay is a smart mood lamp that blends color, light, and music to reflect and enhance your emotions.
-      Designed for young people to better understand and manage how they feel every day.
-    </p>
+  <section class="section">
+    <div class="container">
+      <h1>Welcome to MoodRay</h1>
+      <p class="tagline">A smart lamp that combines light and music to enhance your mood.</p>
+      <a href="#buy-now" class="cta-button">Buy Now</a>
+    </div>
   </section>
 
-  <section id="features" class="section">
-    <h2>Features</h2>
-    <ul>
-      <li>Color-based mood tracking</li>
-      <li>Spotify music integration</li>
-      <li>Voice input mood detection</li>
-      <li>Smart home compatibility</li>
-    </ul>
+  <section class="section alt" id="about">
+    <div class="container">
+      <h2>About MoodRay</h2>
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses scientifically-backed connections between colour and music to improve your mood and mental health.</p>
+      <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Main Features</h2>
+      <ul>
+        <li>Mood enhancement through light and music</li>
+        <li>Smart home integration with voice assistants</li>
+        <li>Customizable app settings</li>
+        <li>Spotify and Apple Music syncing</li>
+        <li>Portable design with rechargeable batteries</li>
+      </ul>
+    </div>
   </section>
 
   <section class="section alt">
-    <h2>Sustainability</h2>
-    <p>
-      MoodRay is built with eco-friendly materials and energy-efficient lighting to reduce environmental impact while promoting emotional well-being.
-    </p>
+    <div class="container">
+      <h2>Mood Color Scale</h2>
+      <div class="mood-legend">
+        <div class="mood-circle mood-black">Stressed</div>
+        <div class="mood-circle mood-grey">Nervous</div>
+        <div class="mood-circle mood-brown">Tired</div>
+        <div class="mood-circle mood-amber">Uncertain</div>
+        <div class="mood-circle mood-green">Calm</div>
+        <div class="mood-circle mood-bluegreen">Relaxed</div>
+        <div class="mood-circle mood-blue">Happy</div>
+        <div class="mood-circle mood-violet">Excited</div>
+        <div class="mood-circle mood-pink">Loved</div>
+        <div class="mood-circle mood-gold">Confident</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mood-calendar">
+    <div class="container">
+      <h2>Track Your Mood</h2>
+      <p>Select a date below to log your top 3 emotions!</p>
+      <div id="calendar"></div>
+
+      <!-- Mood picker modal -->
+      <div id="moodPickerModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Select up to 3 moods</h3>
+          <div id="moodOptions" class="mood-options"></div>
+          <button id="saveMoodsBtn" class="cta-button">Save</button>
+          <button id="cancelMoodsBtn" class="cta-button alt">Cancel</button>
+        </div>
+      </div>
+      <div id="modalOverlay" class="modal-overlay hidden"></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="sustainability">
+    <div class="container">
+      <h2>Sustainability</h2>
+      <p>MoodRay is committed to a greener future. Our lamps use energy-efficient LEDs, recyclable materials, and packaging made from recycled paper. Plus, the rechargeable battery helps reduce e-waste and your carbon footprint.</p>
+    </div>
+  </section>
+
+  <section class="section" id="buy-now">
+    <div class="container">
+      <h2>Buy Now</h2>
+      <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
+      <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
+    </div>
   </section>
 
   <footer class="footer">
-    &copy; 2025 MoodRay. All rights reserved.
+    <p>&copy; 2025 MoodRay. All rights reserved.</p>
   </footer>
+
+  <script>
+    const moods = [
+      { name: "Stressed", color: "black" },
+      { name: "Nervous", color: "grey" },
+      { name: "Tired", color: "brown" },
+      { name: "Uncertain", color: "amber" },
+      { name: "Calm", color: "green" },
+      { name: "Relaxed", color: "bluegreen" },
+      { name: "Happy", color: "blue" },
+      { name: "Excited", color: "violet" },
+      { name: "Loved", color: "pink" },
+      { name: "Confident", color: "gold" }
+    ];
+
+    const maxMoodsPerDay = 3;
+
+    const calendar = document.getElementById("calendar");
+    const moodPickerModal = document.getElementById("moodPickerModal");
+    const moodOptionsContainer = document.getElementById("moodOptions");
+    const saveMoodsBtn = document.getElementById("saveMoodsBtn");
+    const cancelMoodsBtn = document.getElementById("cancelMoodsBtn");
+    const modalOverlay = document.getElementById("modalOverlay");
+
+    let selectedDateKey = null;
+    let selectedMoods = [];
+
+    // Utility for localStorage
+    const getStoredMoods = (dateKey) => {
+      const stored = localStorage.getItem(mood-${dateKey});
+      return stored ? JSON.parse(stored) : [];
+    };
+
+    const setStoredMoods = (dateKey, moodList) => {
+      localStorage.setItem(mood-${dateKey}, JSON.stringify(moodList));
+    };
+
+    // Render calendar
+    function renderCalendar() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let html = "<table><thead><tr>";
+      const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      weekdays.forEach(day => (html += <th>${day}</th>));
+      html += "</tr></thead><tbody><tr>";
+
+      let dayCount = 1;
+      for (let i = 0; i < 42; i++) {
+        if (i < firstDay || dayCount > daysInMonth) {
+          html += "<td></td>";
+        } else {
+          const dateKey = ${year}-${month + 1}-${dayCount};
+          const moodsForDay = getStoredMoods(dateKey);
+          const isToday = dayCount === now.getDate();
+
+          html += <td data-date="${dateKey}" class="${isToday ? "today" : ""}">;
+          html += <div class="day-number">${dayCount}</div>;
+          moodsForDay.forEach(color => {
+            html += <span class="mood-circle mood-${color}"></span>;
+          });
+          html += "</td>";
+          dayCount++;
+        }
+        if ((i + 1) % 7 === 0) html += "</tr><tr>";
+      }
+
+      html += "</tr></tbody></table>";
+      calendar.innerHTML = html;
+    }
+
+    // Show mood picker modal
+    function openMoodPicker(dateKey) {
+      selectedDateKey = dateKey;
+      selectedMoods = getStoredMoods(dateKey);
+
+      // Clear old options
+      moodOptionsContainer.innerHTML = "";
+
+      moods.forEach(m => {
+        const moodDiv = document.createElement("div");
+        moodDiv.classList.add("mood-option");
+        if (selectedMoods.includes(m.color)) moodDiv.classList.add("selected");
+        moodDiv.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue(--${m.color}) || "";
+
+        moodDiv.innerHTML = 
+          <span class="mood-circle mood-${m.color}"></span>
+          <span>${m.name}</span>
+        ;
+
+        moodDiv.addEventListener("click", () => {
+          if (selectedMoods.includes(m.color)) {
+            // Remove mood
+            selectedMoods = selectedMoods.filter(c => c !== m.color);
+            moodDiv.classList.remove("selected");
+          } else {
+            if (selectedMoods.length < maxMoodsPerDay) {
+              selectedMoods.push(m.color);
+              moodDiv.classList.add("selected");
+            } else {
+              alert(You can only select up to ${maxMoodsPerDay} moods.);
+            }
+          }
+        });
+
+        moodOptionsContainer.appendChild(moodDiv);
+      });
+
+      moodPickerModal.classList.remove("hidden");
+      modalOverlay.classList.remove("hidden");
+    }
+
+    function closeMoodPicker() {
+      moodPickerModal.classList.add("hidden");
+      modalOverlay.classList.add("hidden");
+      selectedDateKey = null;
+      selectedMoods = [];
+    }
+
+    // Save moods for selected date
+    saveMoodsBtn.addEventListener("click", () => {
+      if (selectedDateKey) {
+        setStoredMoods(selectedDateKey, selectedMoods);
+        renderCalendar();
+        closeMoodPicker();
+      }
+    });
+
+    cancelMoodsBtn.addEventListener("click", () => {
+      closeMoodPicker();
+    });
+
+    // Close modal on overlay click
+    modalOverlay.addEventListener("click", () => {
+      closeMoodPicker();
+    });
+
+    // Calendar click handler to open mood picker
+    calendar.addEventListener("click", e => {
+      const td = e.target.closest("td[data-date]");
+      if (td) {
+        openMoodPicker(td.dataset.date);
+      }
+    });
+
+    renderCalendar();
+  </script>
 </body>
 </html>
