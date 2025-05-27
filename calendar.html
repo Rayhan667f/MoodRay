@@ -1,106 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mood Calendar - MoodRay</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .calendar-section {
-            max-width: 600px;
-            margin: auto;
-            text-align: center;
-        }
-        input, select, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 1rem;
-        }
-        ul#moodLog {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul#moodLog li {
-            padding: 6px;
-            background-color: #e9ecef;
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-        .mood-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.85rem;
-            margin-left: 10px;
-        }
-        .black { background-color: #000000; }
-        .grey { background-color: #666666; }
-        .brown { background-color: #8B4513; }
-        .amber { background-color: #FFBF00; color: #000; }
-        .green { background-color: #00FF00; color: #000; }
-        .bluegreen { background-color: #00CED1; color: #000; }
-        .blue { background-color: #1E90FF; }
-        .violet { background-color: #9400D3; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Mood Calendar - MoodRay</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .calendar-section {
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 1rem;
+    }
+    ul#moodLog {
+      list-style-type: none;
+      padding: 0;
+    }
+    ul#moodLog li {
+      padding: 6px;
+      background-color: #e9ecef;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Mood Calendar</h1>
-        <p class="tagline">Track your mood and patterns daily</p>
-        <a href="index.html" class="cta-button">Back to Home</a>
-    </div>
+  <div class="container">
+    <h1>Mood Calendar</h1>
+    <p class="tagline">Track your mood and patterns daily</p>
+    <a href="index.html" class="cta-button">Back to Home</a>
+  </div>
 </header>
 
 <section class="section calendar-section">
-    <h2>Log Your Mood</h2>
-    <input type="date" id="moodDate">
-    <select id="moodSelect">
-        <option value="black">Angry / Irritated / Hostile</option>
-        <option value="grey">Sad / Lonely / Depressed</option>
-        <option value="brown">Tired / Bored / Apathetic</option>
-        <option value="amber">Stressed / Anxious / Overwhelmed</option>
-        <option value="green">Calm / Content / Peaceful</option>
-        <option value="bluegreen">Hopeful / Balanced / Reflective</option>
-        <option value="blue">Happy / Joyful / Excited</option>
-        <option value="violet">Grateful / Loved / Inspired</option>
-    </select>
-    <button onclick="logMood()">Log Mood</button>
+  <h2>Log Your Mood</h2>
+  <input type="date" id="moodDate">
+  <select id="moodSelect">
+    <option value="Black">Angry, Frustrated, Overwhelmed</option>
+    <option value="Grey">Confused, Drained, Uncertain</option>
+    <option value="Brown">Grounded, Nostalgic, Calm</option>
+    <option value="Amber">Energetic, Hopeful, Awake</option>
+    <option value="Green">Peaceful, Balanced, Satisfied</option>
+    <option value="BlueGreen">Relaxed, Clear-minded, Secure</option>
+    <option value="Blue">Focused, Motivated, Confident</option>
+    <option value="Violet">Inspired, Loved, Creative</option>
+    <option value="Pink">Joyful, Affectionate, Romantic</option>
+    <option value="Red">Passionate, Determined, Empowered</option>
+    <option value="White">Neutral, Reflective, Numb</option>
+    <option value="Teal">Productive, Thoughtful, Alert</option>
+  </select>
+  <button onclick="logMood()">Log Mood</button>
 
-    <h3>Logged Moods</h3>
-    <ul id="moodLog"></ul>
+  <h3>Logged Moods</h3>
+  <ul id="moodLog"></ul>
+</section>
+
+<section class="section alt">
+  <h2>Mood Color Legend</h2>
+  <div class="mood-legend">
+    <div class="mood-circle mood-black">Angry<br>Frustrated<br>Overwhelmed</div>
+    <div class="mood-circle mood-grey">Confused<br>Drained<br>Uncertain</div>
+    <div class="mood-circle mood-brown">Grounded<br>Nostalgic<br>Calm</div>
+    <div class="mood-circle mood-amber">Energetic<br>Hopeful<br>Awake</div>
+    <div class="mood-circle mood-green">Peaceful<br>Balanced<br>Satisfied</div>
+    <div class="mood-circle mood-bluegreen">Relaxed<br>Clear-minded<br>Secure</div>
+    <div class="mood-circle mood-blue">Focused<br>Motivated<br>Confident</div>
+    <div class="mood-circle mood-violet">Inspired<br>Loved<br>Creative</div>
+    <div class="mood-circle mood-pink">Joyful<br>Affectionate<br>Romantic</div>
+    <div class="mood-circle mood-red">Passionate<br>Determined<br>Empowered</div>
+    <div class="mood-circle mood-white">Neutral<br>Reflective<br>Numb</div>
+    <div class="mood-circle mood-teal">Productive<br>Thoughtful<br>Alert</div>
+  </div>
 </section>
 
 <script>
 function logMood() {
-    const date = document.getElementById('moodDate').value;
-    const mood = document.getElementById('moodSelect').value;
+  const date = document.getElementById('moodDate').value;
+  const mood = document.getElementById('moodSelect').value;
 
-    if (!date) {
-        alert("Please select a date.");
-        return;
-    }
+  if (!date) {
+    alert("Please select a date.");
+    return;
+  }
 
-    const moodText = document.getElementById('moodSelect').selectedOptions[0].text;
-    const log = document.getElementById('moodLog');
-    const newEntry = document.createElement('li');
-    newEntry.innerHTML = `${date} - <span class="mood-badge ${mood}">${moodText}</span>`;
-    log.appendChild(newEntry);
+  const log = document.getElementById('moodLog');
+  const newEntry = document.createElement('li');
+  newEntry.textContent = `${date} - Mood: ${mood}`;
+  log.appendChild(newEntry);
 
-    let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
-    stored.push({date, mood, moodText});
-    localStorage.setItem("moodEntries", JSON.stringify(stored));
+  let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
+  stored.push({date, mood});
+  localStorage.setItem("moodEntries", JSON.stringify(stored));
 }
 
 window.onload = function() {
-    let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
-    const log = document.getElementById('moodLog');
-    stored.forEach(entry => {
-        const li = document.createElement('li');
-        li.innerHTML = `${entry.date} - <span class="mood-badge ${entry.mood}">${entry.moodText}</span>`;
-        log.appendChild(li);
-    });
+  let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
+  const log = document.getElementById('moodLog');
+  stored.forEach(entry => {
+    const li = document.createElement('li');
+    li.textContent = `${entry.date} - Mood: ${entry.mood}`;
+    log.appendChild(li);
+  });
 };
 </script>
 
