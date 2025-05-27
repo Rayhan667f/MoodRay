@@ -1,122 +1,125 @@
-/* styles.css */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  background: #f4f4f4;
-  color: #333;
-}
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodRay - Elevate Your Mood</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <img src="images/logo 1.jpeg" alt="MoodRay Logo" class="logo" />
+  </header>
 
-.header {
-  padding: 1rem;
-  text-align: center;
-}
+  <section class="section">
+    <div class="container">
+      <h1>Welcome to MoodRay</h1>
+      <p class="tagline">A smart lamp that combines light and music to enhance your mood.</p>
+      <a href="#buy-now" class="cta-button">Buy Now</a>
+    </div>
+  </section>
 
-.gradient-header {
-  background: linear-gradient(to right, #ff5f6d, #a26edb); /* Sunset pink to purple */
-}
+  <section class="section alt" id="about">
+    <div class="container">
+      <h2>About MoodRay</h2>
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses
+      scientifically-backed connections between colour and music to improve your mood and mental health.</p>
+      <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
+    </div>
+  </section>
 
-.logo {
-  height: 70px;
-}
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Main Features</h2>
+      <ul>
+        <li>Mood enhancement through light and music</li>
+        <li>Smart home integration with voice assistants</li>
+        <li>Customizable app settings</li>
+        <li>Spotify and Apple Music syncing</li>
+        <li>Portable design with rechargeable batteries</li>
+      </ul>
+    </div>
+  </section>
 
-.section {
-  padding: 3rem 1rem;
-  background: #fff;
-}
+  <section class="section alt">
+    <div class="container">
+      <h2>Mood Color Scale</h2>
+      <div class="mood-legend">
+        <div class="mood-circle mood-black">Stressed</div>
+        <div class="mood-circle mood-grey">Nervous</div>
+        <div class="mood-circle mood-brown">Tired</div>
+        <div class="mood-circle mood-amber">Uncertain</div>
+        <div class="mood-circle mood-green">Calm</div>
+        <div class="mood-circle mood-bluegreen">Relaxed</div>
+        <div class="mood-circle mood-blue">Happy</div>
+        <div class="mood-circle mood-violet">Excited</div>
+      </div>
+    </div>
+  </section>
 
-.section.alt {
-  background: #f0f0f8;
-}
+  <section class="section" id="mood-calendar">
+    <div class="container">
+      <h2>Track Your Mood</h2>
+      <p>Click a date below to log your mood!</p>
+      <div id="calendar"></div>
+    </div>
+  </section>
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+  <section class="section alt" id="buy-now">
+    <div class="container">
+      <h2>Buy Now</h2>
+      <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
+      <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
+    </div>
+  </section>
 
-h1, h2 {
-  color: #5c2a9d;
-}
+  <footer class="footer">
+    <p>&copy; 2025 MoodRay. All rights reserved.</p>
+  </footer>
 
-.tagline {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #555;
-}
+  <script>
+    const calendar = document.getElementById("calendar");
+    const today = new Date();
+    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet"];
 
-.cta-button {
-  background: #5c2a9d;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  text-decoration: none;
-  border-radius: 2rem;
-  font-weight: bold;
-}
+    const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
 
-.mood-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-  margin-top: 1rem;
-}
+    const setStoredMood = (day, mood) => {
+      localStorage.setItem(`mood-${day}`, mood);
+    };
 
-.mood-circle {
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  color: white;
-  font-weight: bold;
-  font-size: 0.85rem;
-}
+    let html = "<table><tr>";
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    days.forEach(day => html += `<th>${day}</th>`);
+    html += "</tr><tr>";
 
-.mood-black { background: #222; }
-.mood-grey { background: #888; }
-.mood-brown { background: #8b5e3c; }
-.mood-amber { background: #ffc107; color: #000; }
-.mood-green { background: #4caf50; }
-.mood-bluegreen { background: #00bfa5; }
-.mood-blue { background: #2196f3; }
-.mood-violet { background: #9c27b0; }
-.mood-pink { background: #e91e63; }
-.mood-gold { background: #ffd700; color: #000; }
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
-#calendar table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= totalDays; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const mood = getStoredMood(dateKey);
+      const isToday = day === today.getDate();
+      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
+      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+    }
 
-#calendar th, #calendar td {
-  border: 1px solid #ccc;
-  width: 14.28%;
-  height: 60px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+    html += "</tr></table>";
+    calendar.innerHTML = html;
 
-#calendar td.today {
-  font-weight: bold;
-  outline: 2px dashed #5c2a9d;
-}
-
-.footer {
-  text-align: center;
-  padding: 1rem;
-  background: #eee;
-  font-size: 0.9rem;
-}
-
-/* Mood backgrounds for calendar */
-#calendar td.black { background: #222; color: white; }
-#calendar td.grey { background: #888; color: white; }
-#calendar td.brown { background: #8b5e3c; color: white; }
-#calendar td.amber { background: #ffc107; color: black; }
-#calendar td.green { background: #4caf50; color: white; }
-#calendar td.bluegreen { background: #00bfa5; color: white; }
-#calendar td.blue { background: #2196f3; color: white; }
-#calendar td.violet { background: #9c27b0; color: white; }
-#calendar td.pink { background: #e91e63; color: white; }
-#calendar td.gold { background: #ffd700; color: black; }
+    calendar.addEventListener("click", (e) => {
+      if (e.target.tagName === "TD" && e.target.dataset.date) {
+        const currentMood = moods.find(m => e.target.classList.contains(m)) || "";
+        let nextMood = moods[(moods.indexOf(currentMood) + 1) % moods.length];
+        moods.forEach(m => e.target.classList.remove(m));
+        e.target.classList.add(nextMood);
+        setStoredMood(e.target.dataset.date, nextMood);
+      }
+    });
+  </script>
+</body>
+</html>
