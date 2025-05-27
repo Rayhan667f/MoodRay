@@ -24,7 +24,8 @@
   <section class="section alt" id="about">
     <div class="container">
       <h2>About MoodRay</h2>
-      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses scientifically-backed connections between colour and music to improve your mood and mental health.</p>
+      <p><strong>“Light the Mood, Feel the Music”</strong> – MoodRay is a smart lamp that uses
+      scientifically-backed connections between colour and music to improve your mood and mental health.</p>
       <p>Our technology detects your mood and adjusts lights and music accordingly. It’s more than a lamp — it’s a companion for your well-being.</p>
     </div>
   </section>
@@ -46,30 +47,33 @@
   <section class="section alt" id="sustainability">
     <div class="container">
       <h2>CSR and Sustainability</h2>
-      <p>Our product supports emotional well-being by detecting a user’s mood and playing tailored music to improve their state. This unique combination of mood detection and music therapy addresses a gap in the market.</p>
-      <p>Aligned with <strong>SDG 3: Good Health and Well-being</strong>, MoodRay aims to boost mental health in everyday life. Through recycled materials, energy-efficient LEDs, rechargeable batteries, and local manufacturing, we also support <strong>SDG 12: Responsible Consumption and Production</strong>.</p>
-      <p>As part of our CSR efforts, we partner with mental health organizations, provide affordable access to underserved communities, and raise awareness through school, university, and workplace programs.</p>
+      <p>
+        Our product supports emotional well-being by detecting a user’s mood and playing tailored music to improve their state. This combination of mood detection and music therapy addresses a market gap. 
+        <br><br>
+        Aligned with <strong>SDG 3: Good Health and Well-being</strong>, MoodRay promotes better mental health. It also supports <strong>SDG 12: Responsible Consumption and Production</strong> by using recycled materials, energy-efficient LEDs, rechargeable batteries, and local manufacturing to reduce waste and emissions. 
+        <br><br>
+        As part of our Corporate Social Responsibility, we collaborate with mental health organizations, provide affordable access to underserved communities, and raise awareness through campaigns and educational programs in schools, universities, and workplaces.
+      </p>
     </div>
   </section>
 
-  <!-- ✅ Mood Color Scale Section -->
-  <section class="section" id="mood-scale">
+  <section class="section">
     <div class="container">
       <h2>Mood Color Scale</h2>
       <div class="mood-legend">
-        <div class="mood-circle mood-black">Stressed<br />Overwhelmed</div>
-        <div class="mood-circle mood-grey">Nervous<br />Anxious</div>
-        <div class="mood-circle mood-brown">Tired<br />Drained</div>
-        <div class="mood-circle mood-amber">Uncertain<br />Indecisive</div>
-        <div class="mood-circle mood-green">Calm<br />Balanced</div>
-        <div class="mood-circle mood-bluegreen">Relaxed<br />Peaceful</div>
-        <div class="mood-circle mood-blue">Happy<br />Content</div>
-        <div class="mood-circle mood-violet">Excited<br />Inspired</div>
+        <div class="mood-circle mood-black">Stressed<br>&<br>Anxious</div>
+        <div class="mood-circle mood-grey">Nervous<br>&<br>Overwhelmed</div>
+        <div class="mood-circle mood-brown">Tired<br>&<br>Drained</div>
+        <div class="mood-circle mood-amber">Uncertain<br>&<br>Restless</div>
+        <div class="mood-circle mood-green">Calm<br>&<br>Balanced</div>
+        <div class="mood-circle mood-bluegreen">Relaxed<br>&<br>Peaceful</div>
+        <div class="mood-circle mood-blue">Happy<br>&<br>Joyful</div>
+        <div class="mood-circle mood-violet">Excited<br>&<br>Energized</div>
       </div>
     </div>
   </section>
 
-  <section class="section alt" id="mood-calendar">
+  <section class="section" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
       <p>Click a date below to log your mood!</p>
@@ -77,7 +81,7 @@
     </div>
   </section>
 
-  <section class="section" id="buy-now">
+  <section class="section alt" id="buy-now">
     <div class="container">
       <h2>Buy Now</h2>
       <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
@@ -95,7 +99,10 @@
     const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet"];
 
     const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
-    const setStoredMood = (day, mood) => localStorage.setItem(`mood-${day}`, mood);
+
+    const setStoredMood = (day, mood) => {
+      localStorage.setItem(`mood-${day}`, mood);
+    };
 
     let html = "<table><tr>";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
