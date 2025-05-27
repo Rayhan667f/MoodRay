@@ -61,17 +61,8 @@
   <section class="section" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Select a date below to log your top 3 emotions!</p>
+      <p>Click a date below to log your top 3 emotions!</p>
       <div id="calendar"></div>
-      <div id="moodPickerModal" class="modal hidden">
-        <div class="modal-content">
-          <h3>Select up to 3 moods</h3>
-          <div id="moodOptions" class="mood-options"></div>
-          <button id="saveMoodsBtn" class="cta-button">Save</button>
-          <button id="cancelMoodsBtn" class="cta-button alt">Cancel</button>
-        </div>
-      </div>
-      <div id="modalOverlay" class="modal-overlay hidden"></div>
     </div>
   </section>
 
@@ -86,7 +77,7 @@
     <div class="container">
       <h2>Buy Now</h2>
       <p>Ready to elevate your mood? Get your MoodRay lamp today.</p>
-      <a href="#" class="cta-button">Buy Now</a>
+      <a href="your-purchase-link.html" class="cta-button">Buy Now</a>
     </div>
   </section>
 
@@ -94,6 +85,71 @@
     <p>&copy; 2025 MoodRay. All rights reserved.</p>
   </footer>
 
-  <script src="scripts.js"></script>
+  <script>
+    const calendar = document.getElementById("calendar");
+    const today = new Date();
+    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet", "pink", "gold"];
+    const maxMoodsPerDay = 3;
+
+    const getStoredMoods = (day) => {
+      const stored = localStorage.getItem(`mood-${day}`);
+      return stored ? stored.split(",") : [];
+    };
+
+    const setStoredMoods = (day, moodList) => {
+      localStorage.setItem(`mood-${day}`, moodList.join(","));
+    };
+
+    let html = "<table><tr>";
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    days.forEach(day => html += `<th>${day}</th>`);
+    html += "</tr><tr>";
+
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= totalDays; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const moodList = getStoredMoods(dateKey);
+      const isToday = day === today.getDate();
+      const moodClasses = moodList.map(m => m).join(" ");
+      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${moodClasses}">${day}</td>`;
+      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+    }
+
+    html += "</tr></table>";
+    calendar.innerHTML = html;
+
+    calendar.addEventListener("click", (e) => {
+      if (e.target.tagName === "TD" && e.target.dataset.date) {
+        const cell = e.target;
+        const dateKey = cell.dataset.date;
+        let moodList = getStoredMoods(dateKey);
+
+        let currentIndex = moods.findIndex(m => moodList.includes(m));
+        let nextMood = moods[(currentIndex + 1) % moods.length];
+
+        // Add next mood if under limit, else rotate
+        if (!moodList.includes(nextMood)) {
+          if (moodList.length >= maxMoodsPerDay) {
+            moodList.shift(); // remove oldest
+          }
+          moodList.push(nextMood);
+        }
+
+        // Reset if already has all moods
+        if (moodList.length === maxMoodsPerDay && moodList.every(m => cell.classList.contains(m))) {
+          moodList = [];
+        }
+
+        moods.forEach(m => cell.classList.remove(m));
+        moodList.forEach(m => cell.classList.add(m));
+        setStoredMoods(dateKey, moodList);
+      }
+    });
+  </script>
 </body>
 </html>
