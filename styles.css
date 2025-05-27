@@ -36,7 +36,7 @@
 }
 
 #calendar th {
-  background: var(--blue);
+  background: var(blue);
   color: white;
   font-weight: 600;
   text-align: center;
@@ -44,12 +44,12 @@
 }
 
 #calendar td:hover:not(:empty) {
-  background: var(--bluegreen-light);
+  background: var(bluegreen-light);
 }
 
 #calendar td.today {
-  background: var(--amber);
-  color: var(--black);
+  background: var(amber);
+  color: var(black);
   font-weight: bold;
 }
 
@@ -72,16 +72,16 @@
   vertical-align: middle;
 }
 
-.mood-black { background: var(--black); }
-.mood-grey { background: var(--grey); }
-.mood-brown { background: var(--brown); }
-.mood-amber { background: var(--amber); }
-.mood-green { background: var(--green); }
-.mood-bluegreen { background: var(--bluegreen); }
-.mood-blue { background: var(--blue); }
-.mood-violet { background: var(--violet); }
-.mood-pink { background: var(--pink); }
-.mood-gold { background: var(--gold); }
+.mood-black { background: var(black); }
+.mood-grey { background: var(grey); }
+.mood-brown { background: var(brown); }
+.mood-amber { background: var(amber); }
+.mood-green { background: var(green); }
+.mood-bluegreen { background: var(bluegreen); }
+.mood-blue { background: var(blue); }
+.mood-violet { background: var(violet); }
+.mood-pink { background: var(pink); }
+.mood-gold { background: var(gold); }
 
 /* Modal Styles */
 .modal {
@@ -106,7 +106,7 @@
   margin-top: 0;
   margin-bottom: 1em;
   font-weight: 700;
-  color: var(--blue);
+  color: var(blue);
   text-align: center;
 }
 
@@ -130,11 +130,11 @@
   background: #f8f8f8;
   min-width: 110px;
   font-size: 0.95em;
-  color: var(--black);
+  color: var(black);
 }
 
 .mood-option.selected {
-  border-color: var(--blue);
+  border-color: var(blue);
   background: #e0f2ff;
 }
 
@@ -145,7 +145,7 @@
 
 /* Modal buttons */
 .cta-button {
-  background: var(--blue);
+  background: var(blue);
   color: white;
   border: none;
   border-radius: 25px;
@@ -158,7 +158,7 @@
 }
 
 .cta-button:hover {
-  background: var(--bluegreen);
+  background: var(bluegreen);
 }
 
 .cta-button.alt {
