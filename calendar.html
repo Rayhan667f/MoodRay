@@ -1,113 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mood Calendar - MoodRay</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodRay - Mood Calendar</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    .calendar-section {
-      max-width: 700px;
-      margin: auto;
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background: #fffafc;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
       text-align: center;
+      color: #800080;
     }
-    input, select, button {
-      padding: 10px;
-      margin: 10px;
-      font-size: 1rem;
+
+    .calendar-container {
+      max-width: 800px;
+      margin: auto;
     }
-    ul#moodLog {
-      list-style-type: none;
-      padding: 0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
     }
-    ul#moodLog li {
-      padding: 6px;
-      background-color: #e9ecef;
-      margin: 5px 0;
-      border-radius: 5px;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
     }
+
+    .mood-select {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    select {
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .mood-display {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .mood-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    /* Mood colors */
+    .black { background: #000; }
+    .grey { background: #666; }
+    .brown { background: #8B4513; }
+    .amber { background: #FFBF00; }
+    .green { background: #00FF00; }
+    .bluegreen { background: #00CED1; }
+    .blue { background: #1E90FF; }
+    .violet { background: #9400D3; }
+    .pink { background: #FF66CC; }
+    .gold { background: #FFD700; }
   </style>
 </head>
 <body>
-
-<header>
-  <div class="container">
-    <h1>Mood Calendar</h1>
-    <p class="tagline">Track your mood and patterns daily</p>
-    <a href="index.html" class="cta-button">Back to Home</a>
+  <h1>Mood Calendar</h1>
+  <div class="calendar-container">
+    <table id="calendar-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Log Moods</th>
+          <th>Your Mood Colors</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body">
+        <!-- Filled by script -->
+      </tbody>
+    </table>
   </div>
-</header>
 
-<section class="section calendar-section">
-  <h2>Log Your Mood</h2>
-  <input type="date" id="moodDate">
-  <select id="moodSelect">
-    <option value="Black">Angry, Frustrated, Overwhelmed</option>
-    <option value="Grey">Confused, Drained, Uncertain</option>
-    <option value="Brown">Grounded, Nostalgic, Calm</option>
-    <option value="Amber">Energetic, Hopeful, Awake</option>
-    <option value="Green">Peaceful, Balanced, Satisfied</option>
-    <option value="BlueGreen">Relaxed, Clear-minded, Secure</option>
-    <option value="Blue">Focused, Motivated, Confident</option>
-    <option value="Violet">Inspired, Loved, Creative</option>
-    <option value="Pink">Joyful, Affectionate, Romantic</option>
-    <option value="Red">Passionate, Determined, Empowered</option>
-    <option value="White">Neutral, Reflective, Numb</option>
-    <option value="Teal">Productive, Thoughtful, Alert</option>
-  </select>
-  <button onclick="logMood()">Log Mood</button>
+  <script>
+    const moods = [
+      "black", "grey", "brown", "amber",
+      "green", "bluegreen", "blue", "violet", "pink", "gold"
+    ];
 
-  <h3>Logged Moods</h3>
-  <ul id="moodLog"></ul>
-</section>
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0-indexed
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const tbody = document.getElementById("calendar-body");
 
-<section class="section alt">
-  <h2>Mood Color Legend</h2>
-  <div class="mood-legend">
-    <div class="mood-circle mood-black">Angry<br>Frustrated<br>Overwhelmed</div>
-    <div class="mood-circle mood-grey">Confused<br>Drained<br>Uncertain</div>
-    <div class="mood-circle mood-brown">Grounded<br>Nostalgic<br>Calm</div>
-    <div class="mood-circle mood-amber">Energetic<br>Hopeful<br>Awake</div>
-    <div class="mood-circle mood-green">Peaceful<br>Balanced<br>Satisfied</div>
-    <div class="mood-circle mood-bluegreen">Relaxed<br>Clear-minded<br>Secure</div>
-    <div class="mood-circle mood-blue">Focused<br>Motivated<br>Confident</div>
-    <div class="mood-circle mood-violet">Inspired<br>Loved<br>Creative</div>
-    <div class="mood-circle mood-pink">Joyful<br>Affectionate<br>Romantic</div>
-    <div class="mood-circle mood-red">Passionate<br>Determined<br>Empowered</div>
-    <div class="mood-circle mood-white">Neutral<br>Reflective<br>Numb</div>
-    <div class="mood-circle mood-teal">Productive<br>Thoughtful<br>Alert</div>
-  </div>
-</section>
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateKey = `${year}-${month + 1}-${day}`;
+      const tr = document.createElement("tr");
 
-<script>
-function logMood() {
-  const date = document.getElementById('moodDate').value;
-  const mood = document.getElementById('moodSelect').value;
+      const tdDate = document.createElement("td");
+      tdDate.textContent = dateKey;
+      tr.appendChild(tdDate);
 
-  if (!date) {
-    alert("Please select a date.");
-    return;
-  }
+      const tdSelect = document.createElement("td");
+      const selectGroup = document.createElement("div");
+      selectGroup.classList.add("mood-select");
 
-  const log = document.getElementById('moodLog');
-  const newEntry = document.createElement('li');
-  newEntry.textContent = `${date} - Mood: ${mood}`;
-  log.appendChild(newEntry);
+      const selects = [];
+      for (let i = 0; i < 3; i++) {
+        const select = document.createElement("select");
+        select.innerHTML = `<option value="">--</option>` + moods.map(
+          mood => `<option value="${mood}">${mood}</option>`
+        ).join("");
+        select.dataset.index = i;
+        selects.push(select);
+        selectGroup.appendChild(select);
+      }
 
-  let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
-  stored.push({date, mood});
-  localStorage.setItem("moodEntries", JSON.stringify(stored));
-}
+      tdSelect.appendChild(selectGroup);
+      tr.appendChild(tdSelect);
 
-window.onload = function() {
-  let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
-  const log = document.getElementById('moodLog');
-  stored.forEach(entry => {
-    const li = document.createElement('li');
-    li.textContent = `${entry.date} - Mood: ${entry.mood}`;
-    log.appendChild(li);
-  });
-};
-</script>
+      const tdDisplay = document.createElement("td");
+      const dotDisplay = document.createElement("div");
+      dotDisplay.className = "mood-display";
+      tdDisplay.appendChild(dotDisplay);
+      tr.appendChild(tdDisplay);
 
+      // Load saved moods
+      const stored = localStorage.getItem(`mood-${dateKey}`);
+      if (stored) {
+        const savedMoods = stored.split(",");
+        savedMoods.forEach((mood, i) => {
+          if (selects[i]) selects[i].value = mood;
+          const dot = document.createElement("div");
+          dot.className = `mood-dot ${mood}`;
+          dotDisplay.appendChild(dot);
+        });
+      }
+
+      // Handle changes
+      selects.forEach((select, index) => {
+        select.addEventListener("change", () => {
+          const currentMoods = selects.map(s => s.value).filter(Boolean);
+          localStorage.setItem(`mood-${dateKey}`, currentMoods.join(","));
+          dotDisplay.innerHTML = "";
+          currentMoods.forEach(mood => {
+            const dot = document.createElement("div");
+            dot.className = `mood-dot ${mood}`;
+            dotDisplay.appendChild(dot);
+          });
+        });
+      });
+
+      tbody.appendChild(tr);
+    }
+  </script>
 </body>
 </html>
