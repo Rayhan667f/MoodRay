@@ -1,70 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MoodRay</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <header>
-    <div id="logo">
-      <img src="logo 1.jpeg" alt="MoodRay Logo" />
-    </div>
-    <nav>
-      <!-- Navigation menu here -->
-    </nav>
+    <img id="logo" src="images/moodray-logo.png" alt="MoodRay Logo">
+    <h1>MoodRay</h1>
+    <p>Lighting your way to better moods</p>
   </header>
 
-  <main>
-    <section id="welcome">
-      <h1>Welcome to MoodRay</h1>
-      <p>Your smart lamp that boosts your mood with light and music.</p>
-    </section>
+  <section class="section">
+    <div class="container">
+      <h2>Welcome to MoodRay</h2>
+      <p>MoodRay is a smart lamp that uses light and music to improve your emotional well-being. Our product detects your mood and responds with personalized light colors and music to help you feel your best.</p>
+    </div>
+  </section>
 
-    <section id="features">
+  <section class="section alt">
+    <div class="container">
+      <h2>About MoodRay</h2>
+      <p>MoodRay was created to support mental health in a fun and interactive way. Whether you're feeling blue or full of energy, MoodRay adjusts its light and sound to match or uplift your mood.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
       <h2>Features</h2>
       <ul>
-        <li>Mood detection</li>
-        <li>Tailored music playback</li>
-        <li>Energy-efficient LEDs</li>
-        <li>Rechargeable and sustainable materials</li>
+        <li>Mood detection through voice input and facial expression</li>
+        <li>Dynamic lighting that changes based on your mood</li>
+        <li>Music recommendations through Spotify integration</li>
+        <li>Mood calendar to track your emotional trends</li>
+        <li>Smart home integration</li>
       </ul>
-    </section>
+    </div>
+  </section>
 
-    <!-- CSR and Sustainability Section -->
-    <section id="csr-sustainability">
+  <section class="section alt">
+    <div class="container">
       <h2>CSR and Sustainability</h2>
-      <p>
-        Our product supports emotional well-being by detecting a user’s mood and playing tailored music to improve their state.
-        This unique combination of mood detection and music therapy addresses a gap in the market. Aligned with SDG 3: Good Health and Well-being,
-        the lamp aims to boost mood and support better mental health in everyday life. By using recycled, sustainable materials,
-        energy-efficient LEDs, rechargeable batteries, and local manufacturing to reduce packaging waste and transport-related emissions,
-        the lamp also supports SDG 12: Responsible Consumption and Production. As part of our Corporate Social Responsibility,
-        we aim to collaborate with mental health organizations, offer affordable access to underserved communities,
-        and raise awareness through campaigns and educational programs in schools, universities, and workplaces.
-      </p>
-    </section>
+      <p>Our product supports emotional well-being by detecting a user’s mood and playing tailored music to improve their state. This unique combination of mood detection and music therapy addresses a gap in the market. Aligned with SDG 3: Good Health and Well-being, the lamp aims to boost mood and support better mental health in everyday life. By using recycled, sustainable materials, energy-efficient LEDs, rechargeable batteries, and local manufacturing to reduce packaging waste and transport-related emissions, the lamp also supports SDG 12: Responsible Consumption and Production. As part of our Corporate Social Responsibility, we aim to collaborate with mental health organizations, offer affordable access to underserved communities, and raise awareness through campaigns and educational programs in schools, universities, and workplaces.</p>
+    </div>
+  </section>
 
-    <!-- Mood Color Scale Section -->
-    <section id="mood-color-scale">
+  <section class="section">
+    <div class="container">
       <h2>Mood Color Scale</h2>
-      <div class="color-circle" style="background-color: var(--color1);"></div>
-      <div class="color-circle" style="background-color: var(--color2);"></div>
-      <div class="color-circle" style="background-color: var(--color3);"></div>
-      <div class="color-circle" style="background-color: var(--color4);"></div>
-      <div class="color-circle" style="background-color: var(--color5);"></div>
-      <div class="color-circle" style="background-color: var(--color6);"></div>
-    </section>
+      <div class="color-scale">
+        <div class="color black">Black - Depressed</div>
+        <div class="color grey">Grey - Sad</div>
+        <div class="color brown">Brown - Tired</div>
+        <div class="color amber">Amber - Annoyed</div>
+        <div class="color green">Green - Calm</div>
+        <div class="color bluegreen">Blue-Green - Peaceful</div>
+        <div class="color blue">Blue - Focused</div>
+        <div class="color violet">Violet - Inspired</div>
+        <div class="color pink">Pink - Excited</div>
+        <div class="color gold">Gold - Happy</div>
+      </div>
+    </div>
+  </section>
 
-    <section id="buy-now">
+  <section class="section alt">
+    <div class="container">
+      <h2>Mood Calendar</h2>
+      <div id="calendar"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
       <h2>Buy Now</h2>
-      <button>Order Your MoodRay Lamp</button>
-    </section>
-  </main>
+      <p>Ready to improve your mood with light and music? Order your MoodRay lamp today!</p>
+      <a class="btn" href="#">Shop Now</a>
+    </div>
+  </section>
 
   <footer>
-    <p>© 2025 MoodRay. All rights reserved.</p>
+    <p>&copy; 2025 MoodRay. All rights reserved.</p>
   </footer>
+
+  <script src="scripts.js"></script>
 </body>
+
 </html>
