@@ -1,209 +1,123 @@
-/* Root Brand Colors from Logo */
-:root {
-  --primary-color: #5c2a9d;
-  --secondary-color: #a26edb;
-  --highlight-color: #ff5f6d;
-  --soft-bg: #f5f3fc;
-  --text-dark: #333;
-  --text-light: #ffffff;
-}
-
+/* Base styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Quicksand', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
-  color: var(--text-dark);
-}
-
-h1, h2, h3 {
-  color: #444;
-}
-
-.section {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.section.alt {
-  background-color: var(--soft-bg);
+  background-color: #f2f6fa;
+  color: #333;
 }
 
 header {
-  padding: 40px 20px;
-  background: linear-gradient(to bottom, var(--highlight-color), var(--secondary-color));
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: linear-gradient(135deg, #ffbf00, #8a2be2);
   color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-bottom: 40px;
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+#logo {
+  width: 100px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.section {
+  padding: 50px 20px;
+}
+
+.section.alt {
+  background-color: #ffffff;
 }
 
 .container {
-  max-width: 1000px;
-  margin: auto;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.tagline {
-  font-size: 1.2rem;
-  color: #666;
-  margin-top: -10px;
+h1, h2 {
+  color: #333;
 }
 
-.logo {
-  display: block;
-  max-width: 180px;
-  margin: 0 auto 20px auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 14px 30px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  text-decoration: none;
-  margin-top: 25px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(31, 63, 163, 0.4);
-  transition: background-color 0.3s ease;
-}
-
-.cta-button:hover,
-.cta-button:focus {
-  background-color: #431f6e;
-  cursor: pointer;
-}
-
-#features ul {
+ul {
   list-style-type: disc;
-  max-width: 700px;
-  margin: 20px auto;
+  padding-left: 20px;
+}
+
+/* Mood Color Scale */
+.color-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.color {
+  flex: 1 1 100px;
+  padding: 10px;
+  color: white;
   text-align: center;
-  padding-left: 40px;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-#about p {
-  max-width: 800px;
-  margin: 1rem auto;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #555;
-}
-
-/* Calendar Styling */
+/* Mood Calendar Styles */
 #calendar {
-  margin: 20px auto;
-  max-width: 600px;
+  margin-top: 20px;
   overflow-x: auto;
 }
 
 #calendar table {
   width: 100%;
   border-collapse: collapse;
+  text-align: center;
 }
 
 #calendar th, #calendar td {
-  padding: 10px;
   border: 1px solid #ccc;
-  text-align: center;
+  padding: 10px;
   width: 14.2%;
-  font-size: 1rem;
+  height: 60px;
+  position: relative;
   cursor: pointer;
-  border-radius: 6px;
+  transition: background-color 0.3s;
 }
 
-#calendar td.today {
-  border: 2px solid var(--highlight-color);
-}
+/* Mood color backgrounds (layered with opacity) */
+#calendar td.black { background-color: rgba(0, 0, 0, 0.6); color: #fff; }
+#calendar td.grey { background-color: rgba(128, 128, 128, 0.6); color: #fff; }
+#calendar td.brown { background-color: rgba(160, 82, 45, 0.6); color: #fff; }
+#calendar td.amber { background-color: rgba(255, 191, 0, 0.6); color: #000; }
+#calendar td.green { background-color: rgba(154, 205, 50, 0.6); color: #000; }
+#calendar td.bluegreen { background-color: rgba(32, 178, 170, 0.6); color: #000; }
+#calendar td.blue { background-color: rgba(30, 144, 255, 0.6); color: #fff; }
+#calendar td.violet { background-color: rgba(138, 43, 226, 0.6); color: #fff; }
+#calendar td.pink { background-color: rgba(255, 105, 180, 0.6); color: #000; }
+#calendar td.gold { background-color: rgba(255, 215, 0, 0.6); color: #000; }
 
-/* Mood Calendar Colors */
-#calendar td.black { background-color: #000000; color: white; }
-#calendar td.grey { background-color: #666666; color: white; }
-#calendar td.brown { background-color: #8B4513; color: white; }
-#calendar td.amber { background-color: #FFBF00; color: black; }
-#calendar td.green { background-color: #00FF00; color: black; }
-#calendar td.bluegreen { background-color: #00CED1; color: black; }
-#calendar td.blue { background-color: #1E90FF; color: white; }
-#calendar td.violet { background-color: #9400D3; color: white; }
-#calendar td.teal { background-color: #008080; color: white; }
-#calendar td.coral { background-color: #FF7F50; color: black; }
-#calendar td.rose { background-color: #FF66CC; color: black; }
-#calendar td.confident { background-color: #FFD700; color: black; }
-
-/* Mood Scale Circles */
-.mood-legend {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 40px;
-  gap: 15px;
-}
-
-.mood-circle {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
+/* Button Styles */
+.btn {
+  display: inline-block;
+  background-color: #8a2be2;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-  padding: 12px;
-  line-height: 1.4;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-.mood-circle:hover {
-  transform: scale(1.08);
+.btn:hover {
+  background-color: #7326c2;
 }
 
-.mood-black { background-color: #000000; }
-.mood-grey { background-color: #666666; }
-.mood-brown { background-color: #8B4513; }
-.mood-amber { background-color: #FFBF00; color: black; }
-.mood-green { background-color: #00FF00; color: black; }
-.mood-bluegreen { background-color: #00CED1; color: black; }
-.mood-blue { background-color: #1E90FF; }
-.mood-violet { background-color: #9400D3; }
-.mood-teal { background-color: #008080; }
-.mood-coral { background-color: #FF7F50; color: black; }
-.mood-rose { background-color: #FF66CC; color: black; }
-.mood-confident { background-color: #FFD700; color: black; }
-
-.footer {
-  background-color: var(--primary-color);
-  color: white;
+/* Footer */
+footer {
   text-align: center;
   padding: 20px;
-}
-
-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, var(--highlight-color), transparent 60%);
-  z-index: -1;
-  animation: pulse-bg 5s ease-in-out infinite;
-  opacity: 0.4;
-  border-radius: 12px;
-}
-
-@keyframes pulse-bg {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(1.05); opacity: 0.6; }
+  background-color: #ececec;
+  color: #555;
+  font-size: 14px;
 }
