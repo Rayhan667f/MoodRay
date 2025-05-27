@@ -1,154 +1,209 @@
-/* Global Styles */
+/* Root Brand Colors from Logo */
 :root {
-  --primary-color: #a29bfe;
-  --secondary-color: #81ecec;
-  --text-color: #2d3436;
-  --background-color: #f9f9ff;
-  --highlight-color: #6c5ce7;
+  --primary-color: #5c2a9d;
+  --secondary-color: #a26edb;
+  --highlight-color: #ff5f6d;
+  --soft-bg: #f5f3fc;
+  --text-dark: #333;
+  --text-light: #ffffff;
 }
 
 body {
-  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: var(--text-dark);
 }
 
 h1, h2, h3 {
-  text-align: center;
-  color: var(--highlight-color);
+  color: #444;
 }
 
-section {
+.section {
   padding: 60px 20px;
   text-align: center;
 }
 
-button, .button {
+.section.alt {
+  background-color: var(--soft-bg);
+}
+
+header {
+  padding: 40px 20px;
+  background: linear-gradient(to bottom, var(--highlight-color), var(--secondary-color));
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: -10px;
+}
+
+.logo {
+  display: block;
+  max-width: 180px;
+  margin: 0 auto 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 14px 30px;
   background-color: var(--primary-color);
-  color: #fff;
+  color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
+  border-radius: 30px;
+  text-decoration: none;
+  margin-top: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(31, 63, 163, 0.4);
   transition: background-color 0.3s ease;
 }
 
-button:hover, .button:hover {
-  background-color: var(--highlight-color);
+.cta-button:hover,
+.cta-button:focus {
+  background-color: #431f6e;
+  cursor: pointer;
 }
 
-/* Welcome Section */
-#welcome {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 100px 20px;
+#features ul {
+  list-style-type: disc;
+  max-width: 700px;
+  margin: 20px auto;
   text-align: center;
+  padding-left: 40px;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-#welcome h1 {
-  font-size: 3rem;
-}
-
-#welcome p {
-  font-size: 1.25rem;
-  margin-top: 10px;
-}
-
-/* Features Section */
-#features {
-  background-color: white;
-}
-
-.feature {
-  margin-bottom: 30px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Mood Color Scale */
-#mood-colors {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-.mood-swatch {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-}
-
-.mood-swatch.black { background-color: #000000; }
-.mood-swatch.grey { background-color: #666666; }
-.mood-swatch.brown { background-color: #8B4513; }
-.mood-swatch.amber { background-color: #FFBF00; }
-.mood-swatch.green { background-color: #00FF00; }
-.mood-swatch.bluegreen { background-color: #00CED1; }
-.mood-swatch.blue { background-color: #1E90FF; }
-.mood-swatch.violet { background-color: #9400D3; }
-.mood-swatch.pink { background-color: #FF66CC; }
-.mood-swatch.gold { background-color: #FFD700; }
-
-/* Calendar Support (Multiple Circles) */
-#calendar {
-  width: 100%;
+#about p {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 1rem auto;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* Calendar Styling */
+#calendar {
+  margin: 20px auto;
+  max-width: 600px;
+  overflow-x: auto;
+}
+
+#calendar table {
+  width: 100%;
   border-collapse: collapse;
 }
 
 #calendar th, #calendar td {
+  padding: 10px;
   border: 1px solid #ccc;
   text-align: center;
-  padding: 16px;
-  height: 80px;
-  vertical-align: top;
-  position: relative;
+  width: 14.2%;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
 }
 
 #calendar td.today {
   border: 2px solid var(--highlight-color);
 }
 
-#calendar td .mood-circle {
-  width: 12px;
-  height: 12px;
+/* Mood Calendar Colors */
+#calendar td.black { background-color: #000000; color: white; }
+#calendar td.grey { background-color: #666666; color: white; }
+#calendar td.brown { background-color: #8B4513; color: white; }
+#calendar td.amber { background-color: #FFBF00; color: black; }
+#calendar td.green { background-color: #00FF00; color: black; }
+#calendar td.bluegreen { background-color: #00CED1; color: black; }
+#calendar td.blue { background-color: #1E90FF; color: white; }
+#calendar td.violet { background-color: #9400D3; color: white; }
+#calendar td.teal { background-color: #008080; color: white; }
+#calendar td.coral { background-color: #FF7F50; color: black; }
+#calendar td.rose { background-color: #FF66CC; color: black; }
+#calendar td.confident { background-color: #FFD700; color: black; }
+
+/* Mood Scale Circles */
+.mood-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 15px;
+}
+
+.mood-circle {
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  display: inline-block;
-  margin: 2px;
-}
-
-.color-black { background-color: #000000; }
-.color-grey { background-color: #666666; }
-.color-brown { background-color: #8B4513; }
-.color-amber { background-color: #FFBF00; }
-.color-green { background-color: #00FF00; }
-.color-bluegreen { background-color: #00CED1; }
-.color-blue { background-color: #1E90FF; }
-.color-violet { background-color: #9400D3; }
-.color-pink { background-color: #FF66CC; }
-.color-gold { background-color: #FFD700; }
-
-/* Sustainability Section */
-#sustainability {
-  background-color: #e0f7fa;
-}
-
-/* Buy Now Section */
-#buy-now {
-  background-color: #fffde7;
-}
-
-/* Footer */
-footer {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 500;
   text-align: center;
-  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+  padding: 12px;
+  line-height: 1.4;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.mood-circle:hover {
+  transform: scale(1.08);
+}
+
+.mood-black { background-color: #000000; }
+.mood-grey { background-color: #666666; }
+.mood-brown { background-color: #8B4513; }
+.mood-amber { background-color: #FFBF00; color: black; }
+.mood-green { background-color: #00FF00; color: black; }
+.mood-bluegreen { background-color: #00CED1; color: black; }
+.mood-blue { background-color: #1E90FF; }
+.mood-violet { background-color: #9400D3; }
+.mood-teal { background-color: #008080; }
+.mood-coral { background-color: #FF7F50; color: black; }
+.mood-rose { background-color: #FF66CC; color: black; }
+.mood-confident { background-color: #FFD700; color: black; }
+
+.footer {
   background-color: var(--primary-color);
   color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, var(--highlight-color), transparent 60%);
+  z-index: -1;
+  animation: pulse-bg 5s ease-in-out infinite;
+  opacity: 0.4;
+  border-radius: 12px;
+}
+
+@keyframes pulse-bg {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0.6; }
 }
