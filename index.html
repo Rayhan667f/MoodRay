@@ -61,8 +61,19 @@
   <section class="section" id="mood-calendar">
     <div class="container">
       <h2>Track Your Mood</h2>
-      <p>Click a date below to log your top 3 emotions!</p>
+      <p>Select a date below to log your top 3 emotions!</p>
       <div id="calendar"></div>
+
+      <!-- Mood picker modal -->
+      <div id="moodPickerModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Select up to 3 moods</h3>
+          <div id="moodOptions" class="mood-options"></div>
+          <button id="saveMoodsBtn" class="cta-button">Save</button>
+          <button id="cancelMoodsBtn" class="cta-button alt">Cancel</button>
+        </div>
+      </div>
+      <div id="modalOverlay" class="modal-overlay hidden"></div>
     </div>
   </section>
 
@@ -86,70 +97,154 @@
   </footer>
 
   <script>
-    const calendar = document.getElementById("calendar");
-    const today = new Date();
-    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet", "pink", "gold"];
+    const moods = [
+      { name: "Stressed", color: "black" },
+      { name: "Nervous", color: "grey" },
+      { name: "Tired", color: "brown" },
+      { name: "Uncertain", color: "amber" },
+      { name: "Calm", color: "green" },
+      { name: "Relaxed", color: "bluegreen" },
+      { name: "Happy", color: "blue" },
+      { name: "Excited", color: "violet" },
+      { name: "Loved", color: "pink" },
+      { name: "Confident", color: "gold" }
+    ];
+
     const maxMoodsPerDay = 3;
 
-    const getStoredMoods = (day) => {
-      const stored = localStorage.getItem(`mood-${day}`);
-      return stored ? stored.split(",") : [];
+    const calendar = document.getElementById("calendar");
+    const moodPickerModal = document.getElementById("moodPickerModal");
+    const moodOptionsContainer = document.getElementById("moodOptions");
+    const saveMoodsBtn = document.getElementById("saveMoodsBtn");
+    const cancelMoodsBtn = document.getElementById("cancelMoodsBtn");
+    const modalOverlay = document.getElementById("modalOverlay");
+
+    let selectedDateKey = null;
+    let selectedMoods = [];
+
+    // Utility for localStorage
+    const getStoredMoods = (dateKey) => {
+      const stored = localStorage.getItem(`mood-${dateKey}`);
+      return stored ? JSON.parse(stored) : [];
     };
 
-    const setStoredMoods = (day, moodList) => {
-      localStorage.setItem(`mood-${day}`, moodList.join(","));
+    const setStoredMoods = (dateKey, moodList) => {
+      localStorage.setItem(`mood-${dateKey}`, JSON.stringify(moodList));
     };
 
-    let html = "<table><tr>";
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    days.forEach(day => html += `<th>${day}</th>`);
-    html += "</tr><tr>";
+    // Render calendar
+    function renderCalendar() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
 
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    const totalDays = new Date(year, month + 1, 0).getDate();
-    for (let day = 1; day <= totalDays; day++) {
-      const dateKey = `${year}-${month + 1}-${day}`;
-      const moodList = getStoredMoods(dateKey);
-      const isToday = day === today.getDate();
-      const moodClasses = moodList.map(m => m).join(" ");
-      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${moodClasses}">${day}</td>`;
-      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+      let html = "<table><thead><tr>";
+      const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      weekdays.forEach(day => (html += `<th>${day}</th>`));
+      html += "</tr></thead><tbody><tr>";
+
+      let dayCount = 1;
+      for (let i = 0; i < 42; i++) {
+        if (i < firstDay || dayCount > daysInMonth) {
+          html += "<td></td>";
+        } else {
+          const dateKey = `${year}-${month + 1}-${dayCount}`;
+          const moodsForDay = getStoredMoods(dateKey);
+          const isToday = dayCount === now.getDate();
+
+          html += `<td data-date="${dateKey}" class="${isToday ? "today" : ""}">`;
+          html += `<div class="day-number">${dayCount}</div>`;
+          moodsForDay.forEach(color => {
+            html += `<span class="mood-circle mood-${color}"></span>`;
+          });
+          html += "</td>";
+          dayCount++;
+        }
+        if ((i + 1) % 7 === 0) html += "</tr><tr>";
+      }
+
+      html += "</tr></tbody></table>";
+      calendar.innerHTML = html;
     }
 
-    html += "</tr></table>";
-    calendar.innerHTML = html;
+    // Show mood picker modal
+    function openMoodPicker(dateKey) {
+      selectedDateKey = dateKey;
+      selectedMoods = getStoredMoods(dateKey);
 
-    calendar.addEventListener("click", (e) => {
-      if (e.target.tagName === "TD" && e.target.dataset.date) {
-        const cell = e.target;
-        const dateKey = cell.dataset.date;
-        let moodList = getStoredMoods(dateKey);
+      // Clear old options
+      moodOptionsContainer.innerHTML = "";
 
-        let currentIndex = moods.findIndex(m => moodList.includes(m));
-        let nextMood = moods[(currentIndex + 1) % moods.length];
+      moods.forEach(m => {
+        const moodDiv = document.createElement("div");
+        moodDiv.classList.add("mood-option");
+        if (selectedMoods.includes(m.color)) moodDiv.classList.add("selected");
+        moodDiv.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue(`--${m.color}`) || "";
 
-        // Add next mood if under limit, else rotate
-        if (!moodList.includes(nextMood)) {
-          if (moodList.length >= maxMoodsPerDay) {
-            moodList.shift(); // remove oldest
+        moodDiv.innerHTML = `
+          <span class="mood-circle mood-${m.color}"></span>
+          <span>${m.name}</span>
+        `;
+
+        moodDiv.addEventListener("click", () => {
+          if (selectedMoods.includes(m.color)) {
+            // Remove mood
+            selectedMoods = selectedMoods.filter(c => c !== m.color);
+            moodDiv.classList.remove("selected");
+          } else {
+            if (selectedMoods.length < maxMoodsPerDay) {
+              selectedMoods.push(m.color);
+              moodDiv.classList.add("selected");
+            } else {
+              alert(`You can only select up to ${maxMoodsPerDay} moods.`);
+            }
           }
-          moodList.push(nextMood);
-        }
+        });
 
-        // Reset if already has all moods
-        if (moodList.length === maxMoodsPerDay && moodList.every(m => cell.classList.contains(m))) {
-          moodList = [];
-        }
+        moodOptionsContainer.appendChild(moodDiv);
+      });
 
-        moods.forEach(m => cell.classList.remove(m));
-        moodList.forEach(m => cell.classList.add(m));
-        setStoredMoods(dateKey, moodList);
+      moodPickerModal.classList.remove("hidden");
+      modalOverlay.classList.remove("hidden");
+    }
+
+    function closeMoodPicker() {
+      moodPickerModal.classList.add("hidden");
+      modalOverlay.classList.add("hidden");
+      selectedDateKey = null;
+      selectedMoods = [];
+    }
+
+    // Save moods for selected date
+    saveMoodsBtn.addEventListener("click", () => {
+      if (selectedDateKey) {
+        setStoredMoods(selectedDateKey, selectedMoods);
+        renderCalendar();
+        closeMoodPicker();
       }
     });
+
+    cancelMoodsBtn.addEventListener("click", () => {
+      closeMoodPicker();
+    });
+
+    // Close modal on overlay click
+    modalOverlay.addEventListener("click", () => {
+      closeMoodPicker();
+    });
+
+    // Calendar click handler to open mood picker
+    calendar.addEventListener("click", e => {
+      const td = e.target.closest("td[data-date]");
+      if (td) {
+        openMoodPicker(td.dataset.date);
+      }
+    });
+
+    renderCalendar();
   </script>
 </body>
 </html>
