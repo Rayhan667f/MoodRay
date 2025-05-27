@@ -1,121 +1,122 @@
-:root {
-  --main-color: #7b2cbf;
-  --accent-color: #ff80ff;
-  --bg-color: #f9f9f9;
-  --text-color: #333;
-  --dot-size: 12px;
-}
-
+/* styles.css */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0;
-  line-height: 1.6;
+  background: #f4f4f4;
+  color: #333;
 }
 
-.section {
-  padding: 60px 20px;
+.header {
+  padding: 1rem;
   text-align: center;
 }
 
-.section.alt {
-  background: #f0f0ff;
+.gradient-header {
+  background: linear-gradient(to right, #ff5f6d, #a26edb); /* Sunset pink to purple */
 }
 
 .logo {
-  max-width: 160px;
-  margin: 0 auto 20px;
-  display: block;
+  height: 70px;
+}
+
+.section {
+  padding: 3rem 1rem;
+  background: #fff;
+}
+
+.section.alt {
+  background: #f0f0f8;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 h1, h2 {
-  color: var(--main-color);
+  color: #5c2a9d;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #555;
 }
 
-li {
-  margin-bottom: 10px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background: var(--accent-color);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-}
-
-#calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  max-width: 400px;
-  margin: 0 auto 40px;
-}
-
-.calendar-cell {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 8px;
-  background: #e0e0e0;
+.cta-button {
+  background: #5c2a9d;
   color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  text-decoration: none;
+  border-radius: 2rem;
   font-weight: bold;
+}
+
+.mood-legend {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   justify-content: center;
-  cursor: pointer;
-}
-
-#calendar .calendar-cell:hover {
-  opacity: 0.8;
-}
-
-table {
-  width: 90%;
-  margin: 0 auto;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 6px;
-  text-align: center;
-}
-
-select {
-  padding: 4px;
+  margin-top: 1rem;
 }
 
 .mood-circle {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 500px;
-  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
 }
 
-.mood-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 14px;
+.mood-black { background: #222; }
+.mood-grey { background: #888; }
+.mood-brown { background: #8b5e3c; }
+.mood-amber { background: #ffc107; color: #000; }
+.mood-green { background: #4caf50; }
+.mood-bluegreen { background: #00bfa5; }
+.mood-blue { background: #2196f3; }
+.mood-violet { background: #9c27b0; }
+.mood-pink { background: #e91e63; }
+.mood-gold { background: #ffd700; color: #000; }
+
+#calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
 
-.mood-item::before {
-  content: "";
-  width: var(--dot-size);
-  height: var(--dot-size);
-  border-radius: 50%;
-  background-color: var(--dot-color);
-  display: block;
-  margin-bottom: 5px;
+#calendar th, #calendar td {
+  border: 1px solid #ccc;
+  width: 14.28%;
+  height: 60px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: background 0.3s;
 }
+
+#calendar td.today {
+  font-weight: bold;
+  outline: 2px dashed #5c2a9d;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #eee;
+  font-size: 0.9rem;
+}
+
+/* Mood backgrounds for calendar */
+#calendar td.black { background: #222; color: white; }
+#calendar td.grey { background: #888; color: white; }
+#calendar td.brown { background: #8b5e3c; color: white; }
+#calendar td.amber { background: #ffc107; color: black; }
+#calendar td.green { background: #4caf50; color: white; }
+#calendar td.bluegreen { background: #00bfa5; color: white; }
+#calendar td.blue { background: #2196f3; color: white; }
+#calendar td.violet { background: #9c27b0; color: white; }
+#calendar td.pink { background: #e91e63; color: white; }
+#calendar td.gold { background: #ffd700; color: black; }
