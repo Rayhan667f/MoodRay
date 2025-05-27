@@ -1,16 +1,16 @@
 /* Root Brand Colors from Logo */
 :root {
-  --black: #000000;
-  --grey: #888888;
-  --brown: #a52a2a;
-  --amber: #ffbf00;
-  --green: #008000;
-  --bluegreen: #008080;
-  --blue: #0000ff;
-  --violet: #8a2be2;
-  --pink: #ff69b4;
-  --gold: #ffd700;
-  --bluegreen-light: #a3d5d3;
+  black: #000000;
+  grey: #888888;
+  brown: #a52a2a;
+  amber: #ffbf00;
+  green: #008000;
+  bluegreen: #008080;
+  blue: #0000ff;
+  violet: #8a2be2;
+  pink: #ff69b4;
+  gold: #ffd700;
+  bluegreen-light: #a3d5d3;
 }
 
 
