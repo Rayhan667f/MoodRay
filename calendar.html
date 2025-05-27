@@ -25,14 +25,22 @@
             margin: 5px 0;
             border-radius: 5px;
         }
-        .mood-circle {
+        .mood-badge {
             display: inline-block;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            margin-right: 10px;
-            vertical-align: middle;
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.85rem;
+            margin-left: 10px;
         }
+        .black { background-color: #000000; }
+        .grey { background-color: #666666; }
+        .brown { background-color: #8B4513; }
+        .amber { background-color: #FFBF00; color: #000; }
+        .green { background-color: #00FF00; color: #000; }
+        .bluegreen { background-color: #00CED1; color: #000; }
+        .blue { background-color: #1E90FF; }
+        .violet { background-color: #9400D3; }
     </style>
 </head>
 <body>
@@ -49,14 +57,14 @@
     <h2>Log Your Mood</h2>
     <input type="date" id="moodDate">
     <select id="moodSelect">
-        <option value="Happy / Joyful / Content">Happy / Joyful / Content</option>
-        <option value="Sad / Down / Gloomy">Sad / Down / Gloomy</option>
-        <option value="Anxious / Nervous / Worried">Anxious / Nervous / Worried</option>
-        <option value="Tired / Drained / Lazy">Tired / Drained / Lazy</option>
-        <option value="Excited / Energetic / Motivated">Excited / Energetic / Motivated</option>
-        <option value="Neutral / Meh / Okay">Neutral / Meh / Okay</option>
-        <option value="Angry / Frustrated / Annoyed">Angry / Frustrated / Annoyed</option>
-        <option value="Lonely / Isolated / Unseen">Lonely / Isolated / Unseen</option>
+        <option value="black">Angry / Irritated / Hostile</option>
+        <option value="grey">Sad / Lonely / Depressed</option>
+        <option value="brown">Tired / Bored / Apathetic</option>
+        <option value="amber">Stressed / Anxious / Overwhelmed</option>
+        <option value="green">Calm / Content / Peaceful</option>
+        <option value="bluegreen">Hopeful / Balanced / Reflective</option>
+        <option value="blue">Happy / Joyful / Excited</option>
+        <option value="violet">Grateful / Loved / Inspired</option>
     </select>
     <button onclick="logMood()">Log Mood</button>
 
@@ -65,17 +73,6 @@
 </section>
 
 <script>
-const moodColors = {
-    "Happy / Joyful / Content": "#ffcc00",
-    "Sad / Down / Gloomy": "#3498db",
-    "Anxious / Nervous / Worried": "#9b59b6",
-    "Tired / Drained / Lazy": "#95a5a6",
-    "Excited / Energetic / Motivated": "#e67e22",
-    "Neutral / Meh / Okay": "#bdc3c7",
-    "Angry / Frustrated / Annoyed": "#e74c3c",
-    "Lonely / Isolated / Unseen": "#34495e"
-};
-
 function logMood() {
     const date = document.getElementById('moodDate').value;
     const mood = document.getElementById('moodSelect').value;
@@ -85,17 +82,14 @@ function logMood() {
         return;
     }
 
+    const moodText = document.getElementById('moodSelect').selectedOptions[0].text;
     const log = document.getElementById('moodLog');
     const newEntry = document.createElement('li');
-    const circle = document.createElement('span');
-    circle.className = 'mood-circle';
-    circle.style.backgroundColor = moodColors[mood] || '#ccc';
-    newEntry.appendChild(circle);
-    newEntry.appendChild(document.createTextNode(`${date} - Mood: ${mood}`));
+    newEntry.innerHTML = `${date} - <span class="mood-badge ${mood}">${moodText}</span>`;
     log.appendChild(newEntry);
 
     let stored = JSON.parse(localStorage.getItem("moodEntries") || "[]");
-    stored.push({date, mood});
+    stored.push({date, mood, moodText});
     localStorage.setItem("moodEntries", JSON.stringify(stored));
 }
 
@@ -104,11 +98,7 @@ window.onload = function() {
     const log = document.getElementById('moodLog');
     stored.forEach(entry => {
         const li = document.createElement('li');
-        const circle = document.createElement('span');
-        circle.className = 'mood-circle';
-        circle.style.backgroundColor = moodColors[entry.mood] || '#ccc';
-        li.appendChild(circle);
-        li.appendChild(document.createTextNode(`${entry.date} - Mood: ${entry.mood}`));
+        li.innerHTML = `${entry.date} - <span class="mood-badge ${entry.mood}">${entry.moodText}</span>`;
         log.appendChild(li);
     });
 };
