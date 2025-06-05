@@ -124,14 +124,13 @@ h1, h2, h3 {
 }
 
 /* Mood Calendar Colors */
-#calendar td.black { background-color: #000000; color: white; }
-#calendar td.grey { background-color: #666666; color: white; }
-#calendar td.brown { background-color: #8B4513; color: white; }
-#calendar td.amber { background-color: #FFBF00; color: black; }
-#calendar td.green { background-color: #00FF00; color: black; }
-#calendar td.bluegreen { background-color: #00CED1; color: black; }
-#calendar td.blue { background-color: #1E90FF; color: white; }
-#calendar td.violet { background-color: #9400D3; color: white; }
+#calendar td.yellow { background-color: #FFD700; color: black; }
+#calendar td.blue { background-color: #ADD8E6; color: black; }
+#calendar td.green { background-color: #A8D5BA; color: black; }
+#calendar td.red { background-color: #B22222; color: white; }
+#calendar td.pink { background-color: #FFB6C1; color: black; }
+#calendar td.rainbow { background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet); color: white; }
+#calendar td.gradient { background: linear-gradient(to right, #e0eafc, #cfdef3); color: black; }
 
 /* Mood Scale Circles */
 .mood-legend {
@@ -164,14 +163,18 @@ h1, h2, h3 {
   transform: scale(1.05);
 }
 
-.mood-black { background-color: #000000; }
-.mood-grey { background-color: #666666; }
-.mood-brown { background-color: #8B4513; }
-.mood-amber { background-color: #FFBF00; color: black; }
-.mood-green { background-color: #00FF00; color: black; }
-.mood-bluegreen { background-color: #00CED1; color: black; }
-.mood-blue { background-color: #1E90FF; }
-.mood-violet { background-color: #9400D3; }
+.mood-yellow { background-color: #FFD700; color: black; }
+.mood-blue { background-color: #ADD8E6; color: black; }
+.mood-green { background-color: #A8D5BA; color: black; }
+.mood-red { background-color: #B22222; }
+.mood-pink { background-color: #FFB6C1; color: black; }
+.mood-rainbow {
+  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+}
+.mood-gradient {
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  color: black;
+}
 
 /* Footer */
 .footer {
