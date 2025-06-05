@@ -61,15 +61,15 @@
     <div class="container">
       <h2>Mood Color Scale</h2>
       <div class="mood-legend">
-        <div class="mood-circle mood-black">Stressed<br>&<br>Anxious</div>
-        <div class="mood-circle mood-grey">Nervous<br>&<br>Overwhelmed</div>
-        <div class="mood-circle mood-brown">Tired<br>&<br>Drained</div>
-        <div class="mood-circle mood-amber">Uncertain<br>&<br>Restless</div>
-        <div class="mood-circle mood-green">Calm<br>&<br>Balanced</div>
-        <div class="mood-circle mood-bluegreen">Relaxed<br>&<br>Peaceful</div>
-        <div class="mood-circle mood-blue">Happy<br>&<br>Joyful</div>
-        <div class="mood-circle mood-violet">Excited<br>&<br>Energized</div>
-      </div>
+  <div class="mood-circle mood-yellow">Happy<br>/<br>Joyful</div>
+  <div class="mood-circle mood-blue">Sad<br>/<br>Low</div>
+  <div class="mood-circle mood-green">Stressed<br>/<br>Anxious</div>
+  <div class="mood-circle mood-red">Angry<br>/<br>Frustrated</div>
+  <div class="mood-circle mood-pink">Tired<br>/<br>Fatigued</div>
+  <div class="mood-circle mood-rainbow">Excited<br>/<br>Energized</div>
+  <div class="mood-circle mood-gradient">Calm<br>/<br>Neutral</div>
+</div>
+
     </div>
   </section>
 
@@ -94,47 +94,48 @@
   </footer>
 
   <script>
-    const calendar = document.getElementById("calendar");
-    const today = new Date();
-    const moods = ["black", "grey", "brown", "amber", "green", "bluegreen", "blue", "violet"];
+  const calendar = document.getElementById("calendar");
+  const today = new Date();
+  const moods = ["yellow", "blue", "green", "red", "pink", "rainbow", "gradient"];
 
-    const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
+  const getStoredMood = (day) => localStorage.getItem(`mood-${day}`) || "";
 
-    const setStoredMood = (day, mood) => {
-      localStorage.setItem(`mood-${day}`, mood);
-    };
+  const setStoredMood = (day, mood) => {
+    localStorage.setItem(`mood-${day}`, mood);
+  };
 
-    let html = "<table><tr>";
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    days.forEach(day => html += `<th>${day}</th>`);
-    html += "</tr><tr>";
+  let html = "<table><tr>";
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  days.forEach(day => html += `<th>${day}</th>`);
+  html += "</tr><tr>";
 
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
-    const totalDays = new Date(year, month + 1, 0).getDate();
-    for (let day = 1; day <= totalDays; day++) {
-      const dateKey = `${year}-${month + 1}-${day}`;
-      const mood = getStoredMood(dateKey);
-      const isToday = day === today.getDate();
-      html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
-      if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  for (let day = 1; day <= totalDays; day++) {
+    const dateKey = `${year}-${month + 1}-${day}`;
+    const mood = getStoredMood(dateKey);
+    const isToday = day === today.getDate();
+    html += `<td data-date="${dateKey}" class="${isToday ? 'today' : ''} ${mood}">${day}</td>`;
+    if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+  }
+
+  html += "</tr></table>";
+  calendar.innerHTML = html;
+
+  calendar.addEventListener("click", (e) => {
+    if (e.target.tagName === "TD" && e.target.dataset.date) {
+      const currentMood = moods.find(m => e.target.classList.contains(m)) || "";
+      const nextMood = moods[(moods.indexOf(currentMood) + 1) % moods.length];
+      moods.forEach(m => e.target.classList.remove(m));
+      e.target.classList.add(nextMood);
+      setStoredMood(e.target.dataset.date, nextMood);
     }
+  });
+</script>
 
-    html += "</tr></table>";
-    calendar.innerHTML = html;
-
-    calendar.addEventListener("click", (e) => {
-      if (e.target.tagName === "TD" && e.target.dataset.date) {
-        const currentMood = moods.find(m => e.target.classList.contains(m)) || "";
-        let nextMood = moods[(moods.indexOf(currentMood) + 1) % moods.length];
-        moods.forEach(m => e.target.classList.remove(m));
-        e.target.classList.add(nextMood);
-        setStoredMood(e.target.dataset.date, nextMood);
-      }
-    });
-  </script>
 </body>
 </html>
